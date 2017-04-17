@@ -21,12 +21,20 @@
                   └─ info.html							
 
 # <b>Install</b>  
-  cd /var/www/htdocs/www.a.com 
-  wget https://raw.githubusercontent.com/cnsphp/CnsPHP/master/install.sh
-  chmod +x install.sh
-  ./install.sh
+  1) modify the nginx config   
+     $ sudo vim /etc/nginx/sites-enabled/www.a.com
+       location / {
+           try_files $uri $uri/ /index.php?$args;
+       }
+
+
+     $ cd /var/www/htdocs/www.a.com 
+     $ wget https://raw.githubusercontent.com/cnsphp/CnsPHP/master/install.sh
+     $ chmod +x install.sh
+     $ sudo ./install.sh
+
 
 # <b>Example</b>							
-  http://ppt.yiyaozg.com/module/controller/method/arg1/val1/arg2/val2/arg3/val3
-  http://ppt.yiyaozg.com/admin/user/info/a/b/c/d/e/f
+   http://ppt.yiyaozg.com/module/controller/method/arg1/val1/arg2/val2/arg3/val3
+   http://ppt.yiyaozg.com/admin/user/info/a/b/c/d/e/f
 </pre>
