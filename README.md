@@ -2,7 +2,7 @@
 # <b>CnsPHP</b>
   a simple php web framework based on smarty ^_^
 
-.the files structure
+# <b>Structure</b>
 
 /index.php
 /CnsPHP/
