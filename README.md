@@ -27,7 +27,7 @@
            try_files $uri $uri/ /index.php?$args;
        }
 
-
+   2) in the document_root directory install CnsPHP
      $ cd /var/www/htdocs/www.a.com 
      $ wget https://raw.githubusercontent.com/cnsphp/CnsPHP/master/install.sh
      $ chmod +x install.sh
