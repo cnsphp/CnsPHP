@@ -13,31 +13,31 @@ class User extends Controller {
 		
 		
         // $this->dbClass();
-		// $this->db->conn();		
-		// or 
+	// $this->db->conn();		
+	// or 
         // $db=$this->dbClass();
         // $db->conn();
 
 		
         // $this->fileClass();
-   		// $this->file->...
-		// or
+   	// $this->file->...
+	// or
         // $file=$this->fileClass();
-		// $file-> ...
+	// $file-> ...
 
 		
         // $this->imgClass();  
-		// $this->img->...
-		// or
+	// $this->img->...
+	// or
         // $img=$this->imgClass(); 
-		// $img->...
+	// $img->...
 
 		
         // $this->strClass();  
-		// $this->str->
-		// or
+	// $this->str->
+	// or
         // $str=$this->imgClass(); 
-		// $str->
+	// $str->
 
 		
         //var_dump($this);         
@@ -46,6 +46,6 @@ class User extends Controller {
          //$this->view->assign("title","xxxx");
 		 
          //$this->show(); //default is  CnsPHP/html/admin/user/info.html
-		 //$this->show($this->rootdir."/tpl/admin/user/info.html");
+	 //$this->show($this->rootdir."/tpl/admin/user/info.html");
      }
 }
