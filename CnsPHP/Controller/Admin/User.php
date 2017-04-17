@@ -6,37 +6,46 @@ class User extends Controller {
          parent::__construct();
      }
 
-     function Iframe($args=[]) {
-         //var_dump($_POST);
-         //var_dump($args);
-         //var_dump($this->view);
-
-        // $this->dbClass(); $this->db
+     function Info($args=[]) {
+        //var_dump($_POST);
+        //var_dump($args);
+        //var_dump($this->view);
+		
+		
+        // $this->dbClass();
+		// $this->db->conn();		
+		// or 
         // $db=$this->dbClass();
-        //
-         $db=$this->dbClass();
-         $db->conn();
+        // $db->conn();
 
-        // $this->fileClass(); $this->file
+		
+        // $this->fileClass();
+   		// $this->file->...
+		// or
         // $file=$this->fileClass();
+		// $file-> ...
 
-        // $this->imgClass();  $this->img
+		
+        // $this->imgClass();  
+		// $this->img->...
+		// or
         // $img=$this->imgClass(); 
+		// $img->...
 
-        // $this->strClass();  $this->str
+		
+        // $this->strClass();  
+		// $this->str->
+		// or
         // $str=$this->imgClass(); 
+		// $str->
 
-        //var_dump($this);
+		
+        //var_dump($this);         
 
-         if(true){
-             echo json_encode(['code'=>1,'msg'=>'success','data'=>[]]);
-         }
-         else
-         {
-             echo json_encode(['code'=>2,'msg'=>'error','data'=>[]]);
-         }
-
+		
          //$this->view->assign("title","xxxx");
-         //$this->show();
+		 
+         //$this->show(); //default is  CnsPHP/html/admin/user/info.html
+		 //$this->show($this->rootdir."/tpl/admin/user/info.html");
      }
 }
