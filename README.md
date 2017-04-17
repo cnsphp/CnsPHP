@@ -35,6 +35,6 @@
 
 
 # <b>Example</b>							
-   http://ppt.yiyaozg.com/module/controller/method/arg1/val1/arg2/val2/arg3/val3
-   http://ppt.yiyaozg.com/admin/user/info/a/b/c/d/e/f
+   http://www.a.com/module/controller/method/arg1/val1/arg2/val2/arg3/val3
+   http://www.a.com/admin/user/info/a/b/c/d/e/f
 </pre>
