@@ -1,0 +1,23 @@
+server {
+    listen 80;
+	
+    server_name www.cnsphp.com;
+    root /www/htdocs/www.cnsphp.com;
+    index index.htm index.html index.php ;
+	
+    location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    location ~ \.(ico|jpg|jpeg|gif|woff)$ {
+        expires 30d;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass    unix:/run/php/php7.0-fpm.sock;
+        fastcgi_index  index.php;
+        fastcgi_intercept_errors        on;
+        fastcgi_param  SCRIPT_FILENAME  $document_root/$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+}
