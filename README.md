@@ -117,7 +117,7 @@
            		
                    //$this->view->assign("title","xxxx");
            		 
-                   //$this->show(); //default is  CnsPHP/html/admin/user/info.html
+                   //$this->show(); //default is  "tpl/html/admin/user/info.html"
            		     //$this->show($this->rootdir."/tpl/admin/user/info.html");
                 }
            } 
