@@ -1,8 +1,6 @@
-
-
 <pre>
 # CnsPHP
-  a simple php web framework based on smarty
+  a simple php web framework based on smarty ^_^
 
 .the files structure
 
