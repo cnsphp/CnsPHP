@@ -3,7 +3,13 @@
 #install CnsPHP
 wget -O CnsPHP.zip https://github.com/cnsphp/CnsPHP/archive/master.zip
 unzip CnsPHP.zip 
-CnsPHP-master CnsPHP
+mv CnsPHP-master/* ./
+rm -fr CnsPHP.zip CnsPHP-master
+
+nginxuser=$(ps -ef |grep "nginx: worker process" | grep -v "grep"|head -1 |awk '{print $1}')
+chown -R "${nginxuser}" tpl/config
+chown -R "${nginxuser}" tpl/cache
+chown -R "${nginxuser}" tpl/compile
 
 cd CnsPHP
 
@@ -12,8 +18,3 @@ wget -O smarty.tar.gz "https://github.com/smarty-php/smarty/archive/v3.1.30.tar.
 smartyname=$(tar xvf smarty.tar.gz  |tail -1 |  awk -F / '{print $1}')
 mv $smartyname/libs  Smarty
 rm -fr $smartyname smarty.tar.gz
-
-nginxuser=$(ps -ef |grep "nginx: worker process" | grep -v "grep"|awk '{print $1}')
-chown -R $nginxuser tpl/config
-chown -R $nginxuser tpl/cache
-chown -R $nginxuser tpl/compile
