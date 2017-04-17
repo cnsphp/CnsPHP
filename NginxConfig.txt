@@ -1,8 +1,8 @@
 server {
     listen 80;
 	
-    server_name www.cnsphp.com;
-    root /www/htdocs/www.cnsphp.com;
+    server_name www.a.com;
+    root /var/www/htdocs/www.a.com;
     index index.htm index.html index.php ;
 	
     location / {
