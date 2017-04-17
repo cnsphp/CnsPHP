@@ -36,5 +36,28 @@
 
 # <b>Example</b>							
    http://www.a.com/module/controller/method/arg1/val1/arg2/val2/arg3/val3
+   
    http://www.a.com/admin/user/info/a/b/c/d/e/f
+   
+   Controller/Admin/User.php
+      public function Info($args=[]) {
+          ...
+      }
+      
+   http://www.a.com/admin/user/get-info/a/b/c/d/e/f
+   
+   Controller/Admin/User.php
+      public function GetInfo($args=[]) {
+           ...
+      }
+   
+   http://www.a.com/blog/user-admin/get-info/a/b/c/d/e/f
+   
+   Controller/Blog/UserAdmin.php
+      public function GetInfo($args=[]) {
+           ...
+      }   
+   
+# <b>Doc</b> 
+   
 </pre>
