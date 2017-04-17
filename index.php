@@ -1,6 +1,4 @@
 <?php
-include("inc/common.inc.php");
-
 //CnsPHP相对于index.php的目录位置
 $GLOBALS['CnsPHP_base'] = "CnsPHP";
 
