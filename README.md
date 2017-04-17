@@ -123,15 +123,15 @@
            } 
     
      <b>2) tpl/admin/user/info.html</b>
-       <!DOCTYPE html&gt;
-       <html&gt;
-       <head&gt;
-           <meta charset="UTF-8"&gt;
-           <title><!--{$title}--&gt;</title&gt;
-       </head&gt;
+       &lt;!DOCTYPE html&gt;
+       &lt;html&gt;
+       &lt;head&gt;
+           &lt;meta charset="UTF-8"&gt;
+           &lt;title&gt;&lt;!--{$title}--&gt;&lt;/title&gt;
+       &lt;/head&gt;
 
-       <body&gt;
+       &lt;body&gt;
              Content of the document......
-       </body&gt;
-      </html&gt; 
+       &lt;/body&gt;
+      &lt;/html&gt; 
 </pre>
