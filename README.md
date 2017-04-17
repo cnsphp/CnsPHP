@@ -3,7 +3,6 @@
   a simple php web framework based on smarty ^_^
 
 # <b>Structure</b>
-
 /index.php
 /CnsPHP/
    ├─ Controller
