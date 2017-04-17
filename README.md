@@ -4,26 +4,22 @@
 
 .the files structure
 
- /index.php
- /imgs
- /css
- /js
- /CnsPHP/
+/index.php
+/CnsPHP/
    ├─ Controller
    │    ├─ Controller.php
    │    └─ Admin
-   │            └─ User.php
-   ├─ Smarty
-   │   └─ Smarty.class.php
-   └─ tpl
-         ├─ cache
-         ├─ compile
-         ├─ config
-         └─ html
-               └─ admin
-                      └─ user
-                           └─ info.html
-							
+   │          └─ User.php
+   └─ Smarty
+          └─ Smarty.class.php
+ /tpl
+   ├─ cache
+   ├─ compile
+   ├─ config
+   └─ html
+        └─ admin
+             └─ user
+                  └─ info.html							
 
 .Example							
   http://ppt.yiyaozg.com/module/controller/method/arg1/val1/arg2/val2/arg3/val3
