@@ -110,6 +110,7 @@ class Model extends CnsDB {
     }
 
     function update($arr,$arr2=[],$sql=""){
+        
         if(strlen($sql) == 0){
              $sql = "update ".$this->tableName." set "; 
              $sqlsub="";
@@ -121,17 +122,32 @@ class Model extends CnsDB {
              }
 
              $sqlsub2="";
+            
+             $keys=array_keys($arr);
+             $keys2=array_keys($arr2);
+             $arr_inter = array_intersect($keys,$keys2);
+                
              foreach($arr2 as $k=>$v){
                 if(strlen($sqlsub2)>0)
-                   $sqlsub2.=" and $k=:$k";
+                   $sqlsub2.=" and $k=:".in_array($k,$arr_inter)?$k.'_new_intersect':$k;
                 else
-                   $sqlsub2=" where $k=:$k"; 
+                   $sqlsub2=" where $k=:".in_array($k,$arr_inter)?$k.'_new_intersect':$k; 
              }
 
              if(strlen($sqlsub)>0)
              {
                  $sql .= " $sqlsub $sqlsub2";
-                 return $this->query($sql,array_merge($arr,$arr2));
+                 if(count($arr_inter)==0)
+                     return $this->query($sql,array_merge($arr,$arr2));
+                 else
+                 {
+                     $arr3=[];
+                     foreach($arr2 as $k=>$v)
+                     {                         
+                         $arr3[in_array($k,$arr_inter)?$k.'_new_intersect':$k]=$v;
+                     }
+                     return $this->query($sql,array_merge($arr,$arr3));
+                 }
              }
              else
              {
