@@ -94,7 +94,6 @@ class CnsDB {
 }
 
 class Model extends CnsDB {
-    public $id = 'id';
     public $tableName = '';
 
     function __construct($tableName=""){
@@ -102,19 +101,13 @@ class Model extends CnsDB {
         $this->conn(); 
     }
 
+     
     function tableName($tableName=""){
         if(strlen(trim($tableName)) > 0)
             $this->tableName = $tableName;
         return $this;
     }
-
-    function primaryKey($id=""){
-        if(strlen($trim($id) >= 0 ))
-        {
-            $this->id = $id;
-        }
-        return $this;
-    }
+     
 
     function getOne($arr=[],$sql="") {
         if(strlen($sql) == 0){
