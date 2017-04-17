@@ -33,7 +33,7 @@ class User extends Controller {
            if($result !== false)
                echo $result->affectedRows;
 
-           $result =(new UserModel())->update(['age'=>55,'gender'=>'F'],['name'=>'baaaaa']);
+           $result =(new UserModel())->update(['age'=>55,'gender'=>'F','name'=>'vvvv'],['name'=>'baaaaa','age'=>30]);
            $result =(new UserModel())->update(['age'=>45,'gender'=>'F','name'=>'bccbaa'],[],"update user set age=:age, gender=:gender where name=:name");
            if($result !== false)
                echo $result->affectedRows;

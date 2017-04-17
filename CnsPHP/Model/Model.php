@@ -129,14 +129,17 @@ class Model extends CnsDB {
                 
              foreach($arr2 as $k=>$v){
                 if(strlen($sqlsub2)>0)
-                   $sqlsub2.=" and $k=:".in_array($k,$arr_inter)?$k.'_new_intersect':$k;
+                   $sqlsub2.=" and $k=:".(in_array($k,$arr_inter)?$k.'_new_intersect':$k);
                 else
-                   $sqlsub2=" where $k=:".in_array($k,$arr_inter)?$k.'_new_intersect':$k; 
+                   $sqlsub2=" where $k=:".(in_array($k,$arr_inter)?$k.'_new_intersect':$k); 
              }
+             echo $sqlsub2."\n";
+
 
              if(strlen($sqlsub)>0)
              {
                  $sql .= " $sqlsub $sqlsub2";
+                 echo $sql."\n";
                  if(count($arr_inter)==0)
                      return $this->query($sql,array_merge($arr,$arr2));
                  else
@@ -144,8 +147,12 @@ class Model extends CnsDB {
                      $arr3=[];
                      foreach($arr2 as $k=>$v)
                      {                         
-                         $arr3[in_array($k,$arr_inter)?$k.'_new_intersect':$k]=$v;
+                         $arr3[(in_array($k,$arr_inter)?$k.'_new_intersect':$k)]=$v;
                      }
+                     var_dump($arr);
+                     var_dump($arr2);
+                     var_dump($arr3);
+                     var_dump(array_merge($arr,$arr3));
                      return $this->query($sql,array_merge($arr,$arr3));
                  }
              }
