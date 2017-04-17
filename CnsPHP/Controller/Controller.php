@@ -1,6 +1,7 @@
 <?php
 namespace CnsPHP;
 include($GLOBALS['CnsPHP_base']."/Smarty/SmartyBC.class.php");
+include($GLOBALS['CnsPHP_base']."/Model/Model.php");
 
 class Controller {
     public $root_dir="";
@@ -11,7 +12,7 @@ class Controller {
     public $view = null;
     public $controller = "";
     public $method = "";
-    public $db=null;
+    public $model=null;
     public $file=null;
     public $img = null;
     public $str = null;
@@ -84,6 +85,10 @@ class Controller {
         }
     }
 
+    public function modelClass() {
+        return $this->model=(new Model())->conn();
+    }
+
     public function strClass() {
         return $this->str = new class {
         	function __structure() {
@@ -140,94 +145,6 @@ class Controller {
         		}
         		return $password;
         	}
-        };
-    }
-
-
-    function dbClass(){
-        return $this->db = new class {
-            public $conn = null;
-
-            public $error_code=0;
-            public $error_msg="";
-            public $lastInsertId=0;
-            public $affectedRows=0;
-            public $rows=array();
-
-            function __structure() {
-            }
-
-            private function error($code,$msg) {
-                $this->error_code=$code;
-                $this->error_msg=$msg;
-            }
-
-            private function init() {
-                $this->error_code=0;
-                $this->error_msg='';
-                $this->lastInsertId=0;
-                $this->affectedRows=0;
-                $this->rows=array();
-            }
-
-            //return true / false
-            public function conn($host="",$dbname="",$user="",$pass="",$port=3306) {
-                $this->init();
-                try {
-                    if($host=="" && $dbname=="" && $user=="" && $pass==""){
-                        $host   = $GLOBALS['CnsPHP_db_host'];
-                        $dbname = $GLOBALS['CnsPHP_db_name'];
-                        $port   = $GLOBALS['CnsPHP_db_port'];
-                        $user   = $GLOBALS['CnsPHP_db_user'];
-                        $pass   = $GLOBALS['CnsPHP_db_pass'];
-                    }
-                    $this->conn = new \PDO('mysql:host='.$host.';port='.$port.';dbname='.$dbname,$user,$pass) or die(__CLASS__.':'.__METHOD__);
-                    return true;
-                } catch(PDOException $e){
-                    $this->error(1,"Database connect error");
-                    return false;
-                }
-            }
-
-            // return true/false
-            public function query($sql,$arr=array()) {
-                $this->init();
-                $sql=trim($sql);
-                $stmt = $this->conn->prepare($sql);
-                $result=$stmt->execute($arr);
-
-                if($stmt->errorCode()=="00000")
-                {
-                    if(preg_match('/^select\s+/si', $sql))
-                    {
-                        $this->rows=$stmt->fetchAll();            
-                    }
-                    else if(preg_match('/^insert\s+/si',$sql))
-                    {
-                        $this->lastInsertId=$this->conn->lastInsertId();
-                        $this->affectedRows=$stmt->rowCount();
-                    }
-                    else if(preg_match('/^delete\s+/si', $sql))
-                    {
-                        $this->affectedRows=$stmt->rowCount();
-                    }
-                    else if(preg_match('/^update\s+/si', $sql))
-                    {
-                        $this->affectedRows=$stmt->rowCount();
-                    }
-                    else if(preg_match('/^create\s+/si', $sql))
-                    {
-                    }
-
-                    $this->error(0,'');
-                    return true;
-                }
-                else
-                {
-                    $this->error($stmt->errorCode(),$stmt->errorInfo()[2]);
-                    return false;
-                }
-            }
         };
     }
 

@@ -8,7 +8,6 @@ class CnsDB {
      public $error_msg="";
      public $lastInsertId=0;
      public $affectedRows=0;
-     public $rows=array();
 
      function __structure() {
      }
@@ -23,7 +22,7 @@ class CnsDB {
          $this->error_msg='';
          $this->lastInsertId=0;
          $this->affectedRows=0;
-         $this->rows=array();
+         return $this;
      }
 
      //return true / false
@@ -38,10 +37,12 @@ class CnsDB {
                  $pass   = $GLOBALS['CnsPHP_db_pass'];
              }
              $this->conn = new \PDO('mysql:host='.$host.';port='.$port.';dbname='.$dbname,$user,$pass) or die(__CLASS__.':'.__METHOD__);
-             return true;
+             return $this;
+             //return true;
          } catch(PDOException $e){
              $this->error(1,"Database connect error");
-             return false;
+             return null;
+             //return false;
          }
      }
 
@@ -53,34 +54,36 @@ class CnsDB {
          $this->init();
          $sql=trim($sql);
          $stmt = $this->conn->prepare($sql);
+
          $result=$stmt->execute($arr);
 
          if($stmt->errorCode()=="00000")
          {
+             $this->error(0,'');
              if(preg_match('/^select\s+/si', $sql))
              {
                  return $stmt;
-                 //$this->rows=$stmt->fetchAll();            
              }
              else if(preg_match('/^insert\s+/si',$sql))
              {
                  $this->lastInsertId=$this->conn->lastInsertId();
                  $this->affectedRows=$stmt->rowCount();
+                 return $this;
              }
              else if(preg_match('/^delete\s+/si', $sql))
              {
                  $this->affectedRows=$stmt->rowCount();
+                 return $this;
              }
              else if(preg_match('/^update\s+/si', $sql))
              {
                  $this->affectedRows=$stmt->rowCount();
+                 return $this;
              }
              else if(preg_match('/^create\s+/si', $sql))
              {
+                 return $this;
              }
-
-             $this->error(0,'');
-             return true;
          }
          else
          {
@@ -91,43 +94,150 @@ class CnsDB {
 }
 
 class Model extends CnsDB {
-    function __construct(){
-        $this->db->conn(); 
+    public $id = 'id';
+    public $tableName = '';
+
+    function __construct($tableName=""){
+        $this->tableName = $tableName;
+        $this->conn(); 
     }
 
     function tableName($tableName=""){
-        if(strlen(trim($tableName)) >= 0)
+        if(strlen(trim($tableName)) > 0)
             $this->tableName = $tableName;
         return $this;
     }
 
     function primaryKey($id=""){
-        if(strlen($trim($id) >= 0 )
-            $this->id=$id;
+        if(strlen($trim($id) >= 0 ))
+        {
+            $this->id = $id;
+        }
         return $this;
     }
 
-    function getOne($sql,$arr){
-        $this->db->query($sql,$arr)->fetch();
+    function getOne($arr=[],$sql="") {
+        if(strlen($sql) == 0){
+             $sql = "select * from ".$this->tableName; 
+             $sqlsub="";
+             foreach($arr as $k=>$v){
+                if(strlen($sqlsub)>0)
+                   $sqlsub.=" , $k=:$k";
+                else
+                   $sqlsub.=" $k=:$k"; 
+             }
+             if(strlen($sqlsub)>0)
+                 $sql .= " where $sqlsub";
+        }
+
+         $query=$this->query($sql,$arr);
+         if($query)
+             return $query->fetch();
+         else
+             return [];
     }
 
-    function getAll($sql,$arr) {
-        $this->db->query($sql,$arr)->fetchAll();
+
+    function getAll($arr=[],$sql="") {
+        if(strlen($sql) == 0){
+             $sql = "select * from ".$this->tableName; 
+             $sqlsub="";
+             foreach($arr as $k=>$v){
+                if(strlen($sqlsub)>0)
+                   $sqlsub.=" , $k=:$k";
+                else
+                   $sqlsub.=" $k=:$k"; 
+             }
+             if(strlen($sqlsub)>0)
+                 $sql .= " where $sqlsub";
+        }
+
+         $query=$this->query($sql,$arr);
+         if($query)
+             return $query->fetchAll();
+         else
+             return [];
     }
 
-    function insert($sql,$arr){
-        return $this->db->query($sql,$arr);
+    function insert($arr,$sql=""){
+        if(strlen($sql) == 0){
+             $sql = "insert into ".$this->tableName." set "; 
+             $sqlsub="";
+             foreach($arr as $k=>$v){
+                if(strlen($sqlsub)>0)
+                   $sqlsub.=" , $k=:$k";
+                else
+                   $sqlsub.=" $k=:$k"; 
+             }
+             if(strlen($sqlsub)>0)
+             {
+                 $sql .= " $sqlsub";
+                 return $this->query($sql,$arr);
+             }
+             else
+             {
+                 return false;
+             }
+        }
+        else
+           return $this->query($sql,$arr);
     }
 
-    function del($sql,$arr){
-        return $this->db->query($sql,$arr);
+    function delete($arr,$sql){
+        if(strlen($sql) == 0){
+             $sql = "delete from ".$this->tableName; 
+             $sqlsub="";
+             foreach($arr as $k=>$v){
+                if(strlen($sqlsub)>0)
+                   $sqlsub.=" and $k=:$k";
+                else
+                   $sqlsub.=" where $k=:$k"; 
+             }
+
+             if(strlen($sqlsub)>0)
+             {
+                 $sql .= " $sqlsub";
+                 return $this->query($sql,$arr);
+             }
+             else
+             {
+                 return false;
+             }
+        }
+        else
+           return $this->query($sql,$arr);
     }
 
-    function update($sql,$arr){
-        return $this->db->query($sql,$arr);
-    }
+    function update($arr,$arr2=[],$sql=""){
+        if(strlen($sql) == 0){
+             $sql = "update ".$this->tableName." set "; 
+             $sqlsub="";
+             foreach($arr as $k=>$v){
+                if(strlen($sqlsub)>0)
+                   $sqlsub.=" , $k=:$k";
+                else
+                   $sqlsub=" $k=:$k"; 
+             }
 
-    function create($sql,$arr){
-        return $this->db->query($sql,$arr);
+             $sqlsub2="";
+             foreach($arr2 as $k=>$v){
+                if(strlen($sqlsub2)>0)
+                   $sqlsub2.=" and $k=:$k";
+                else
+                   $sqlsub2=" where $k=:$k"; 
+             }
+
+             if(strlen($sqlsub)>0)
+             {
+                 $sql .= " $sqlsub $sqlsub2";
+                 return $this->query($sql,array_merge($arr,$arr2));
+             }
+             else
+             {
+                 return false;
+             }
+        }
+        else
+           return $this->query($sql,array_merge($arr,$arr2));
     }
 }
