@@ -1,6 +1,6 @@
 <?php
 namespace CnsPHP;
-include($GLOBALS['CnsPHP_base']."/Smarty/SmartyBC.class.php");
+include($GLOBALS['CnsPHP_base']."/Smarty/Smarty.class.php");
 include($GLOBALS['CnsPHP_base']."/Model/Model.php");
 
 class Controller {
