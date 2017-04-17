@@ -11,4 +11,4 @@ $GLOBALS['CnsPHP_db_pass'] = "pass";
 $GLOBALS['CnsPHP_db_name'] = "dbname";
 
 include($GLOBALS['CnsPHP_base']."/Controller/Controller.php");
-(new QCourse\Controller())->init();
+(new CnsPHP\Controller())->init();
