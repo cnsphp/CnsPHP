@@ -9,6 +9,8 @@
    │    ├─ Controller.php
    │    └─ Admin
    │          └─ User.php
+   ├─ Model
+   │    └─ Model.php
    └─ Smarty
           └─ Smarty.class.php
  /tpl
