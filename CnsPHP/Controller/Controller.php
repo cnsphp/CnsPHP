@@ -12,7 +12,6 @@ class Controller {
     public $view = null;
     public $controller = "";
     public $method = "";
-    public $model=null;
     public $file=null;
     public $img = null;
     public $str = null;
@@ -85,9 +84,6 @@ class Controller {
         }
     }
 
-    public function modelClass() {
-        return $this->model=(new Model())->conn();
-    }
 
     public function strClass() {
         return $this->str = new class {
