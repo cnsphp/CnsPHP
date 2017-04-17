@@ -1,5 +1,5 @@
 <pre>
-# CnsPHP
+# <b>CnsPHP</b>
   a simple php web framework based on smarty ^_^
 
 .the files structure
@@ -21,13 +21,13 @@
              └─ user
                   └─ info.html							
 
-# Install  
+# <b>Install</b>  
   cd /var/www/htdocs/www.a.com 
   wget https://raw.githubusercontent.com/cnsphp/CnsPHP/master/install.sh
   chmod +x install.sh
   ./install.sh
 
-# Example							
+# <b>Example</b>							
   http://ppt.yiyaozg.com/module/controller/method/arg1/val1/arg2/val2/arg3/val3
   http://ppt.yiyaozg.com/admin/user/info/a/b/c/d/e/f
 </pre>
