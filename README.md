@@ -65,8 +65,8 @@
     Documentation http://www.smarty.net/documentation
     
     default we use:
-        $this->view->left_delimiter = '<!--{';
-        $this->view->right_delimiter = '}-->';
+        $this->view->left_delimiter = '&lt;!--{';
+        $this->view->right_delimiter = '}--&gt;';
         
     Example:
        1)CnsPHP/Controller/Admin/User.php
@@ -123,15 +123,15 @@
            } 
     
      <b>2) tpl/admin/user/info.html</b>
-       <!DOCTYPE html>
-       <html>
-       <head>
-           <meta charset="UTF-8">
-           <title><!--{$title}--></title>
-       </head>
+       <!DOCTYPE html&gt;
+       <html&gt;
+       <head&gt;
+           <meta charset="UTF-8"&gt;
+           <title><!--{$title}--&gt;</title&gt;
+       </head&gt;
 
-       <body>
+       <body&gt;
              Content of the document......
-       </body>
-      </html>  
+       </body&gt;
+      </html&gt; 
 </pre>
