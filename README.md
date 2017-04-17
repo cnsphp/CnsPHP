@@ -70,7 +70,7 @@
         
     Example:
        1)CnsPHP/Controller/Admin/User.php
-         <?php
+         &lt;?php
            namespace CnsPHP;
            
            class User extends Controller {
