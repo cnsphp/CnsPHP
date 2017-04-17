@@ -21,12 +21,13 @@
              └─ user
                   └─ info.html							
 
-.Install 
- 
- cd /var/www/htdocs/www.a.com 
- 
+# Install  
+  cd /var/www/htdocs/www.a.com 
+  wget https://raw.githubusercontent.com/cnsphp/CnsPHP/master/install.sh
+  chmod +x install.sh
+  ./install.sh
 
-.Example							
+# Example							
   http://ppt.yiyaozg.com/module/controller/method/arg1/val1/arg2/val2/arg3/val3
   http://ppt.yiyaozg.com/admin/user/info/a/b/c/d/e/f
 </pre>
