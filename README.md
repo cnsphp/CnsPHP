@@ -61,6 +61,77 @@
            ...
       }   
    
-# <b>Doc</b> 
-   
+# <b>Controller and Smarty TPL</b> 
+    Documentation http://www.smarty.net/documentation
+    
+    default we use:
+        $this->view->left_delimiter = '<!--{';
+        $this->view->right_delimiter = '}-->';
+        
+    Example:
+       1)CnsPHP/Controller/Admin/User.php
+         <?php
+           namespace CnsPHP;
+           
+           class User extends Controller {
+                function __construct(){
+                    parent::__construct();
+                }
+           
+                function Info($args=[]) {
+                   //var_dump($_POST);
+                   //var_dump($args);
+                   //var_dump($this->view);
+           		
+           		
+                   // $this->dbClass();
+           		     // $this->db->conn();		
+           	       // or 
+                   // $db=$this->dbClass();
+                   // $db->conn();
+           
+           		
+                   // $this->fileClass();
+              		 // $this->file->...
+           		     // or
+                   // $file=$this->fileClass();
+           		     // $file-> ...
+           
+           		
+                   // $this->imgClass();  
+           		     // $this->img->...
+           		     // or
+                   // $img=$this->imgClass(); 
+           		     // $img->...
+           
+           		
+                   // $this->strClass();  
+           		     // $this->str->
+           		     // or
+                   // $str=$this->imgClass(); 
+           		     // $str->
+           
+           		
+                   //var_dump($this);         
+           
+           		
+                   //$this->view->assign("title","xxxx");
+           		 
+                   //$this->show(); //default is  CnsPHP/html/admin/user/info.html
+           		     //$this->show($this->rootdir."/tpl/admin/user/info.html");
+                }
+           } 
+    
+     <b>2) tpl/admin/user/info.html</b>
+       <!DOCTYPE html>
+       <html>
+       <head>
+           <meta charset="UTF-8">
+           <title><!--{$title}--></title>
+       </head>
+
+       <body>
+             Content of the document......
+       </body>
+      </html>  
 </pre>
