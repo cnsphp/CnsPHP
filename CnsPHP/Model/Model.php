@@ -1,5 +1,5 @@
 <?php
-namespace CnsPHP;
+namespace CnsPHP\Model;
 
 class Model extends CnsDB {
     public $tableName = '';
@@ -10,7 +10,7 @@ class Model extends CnsDB {
     }
 
      
-    function tableName($tableName=""){
+    function table($tableName=""){
         if(strlen(trim($tableName)) > 0)
             $this->tableName = $tableName;
         return $this;

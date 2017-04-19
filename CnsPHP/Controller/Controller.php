@@ -1,10 +1,8 @@
 <?php
-namespace CnsPHP;
-include($GLOBALS['CnsPHP_base']."/Smarty/Smarty.class.php");
-include($GLOBALS['CnsPHP_base']."/Model/Model.php");
+namespace CnsPHP\Controller;
 
 class Controller {
-    public $root_dir="";
+    public $rootdir="";
 
     public $uri = "";
 
@@ -19,14 +17,14 @@ class Controller {
     public $args = [];
 
     function __construct() {
-        $this->root_dir=getcwd();
+        $this->rootdir=getcwd();
 
         $this->parseURI();
 
         $this->view = new \Smarty();
-        $this->view->setTemplateDir($this->root_dir.'/tpl/html/');
-        $this->view->setCompileDir($this->root_dir.'/tpl/compile/');
-        $this->view->setConfigDir($this->root_dir.'/tpl/config/');
+        $this->view->setTemplateDir($this->rootdir.'/tpl/html/');
+        $this->view->setCompileDir($this->rootdir.'/tpl/compile/');
+        $this->view->setConfigDir($this->rootdir.'/tpl/config/');
         $this->view->left_delimiter = '<!--{';
         $this->view->right_delimiter = '}-->';
     }
@@ -59,6 +57,12 @@ class Controller {
             return ucfirst($str);
     }
 
+
+    public function msg($code=1,$msg='',$data=[])
+    {
+        echo json_encode(["code"=>$code, "msg"=>$msg, "data"=>$data]);
+    }
+
     /**
      * 默认目录为: tpl/Modulename/ControllerName/MethodName.html
      */
@@ -71,11 +75,10 @@ class Controller {
 
     public function init()
     {
-        $f=$this->root_dir.'/'.$GLOBALS['CnsPHP_base'].'/Controller/'.$this->module.'/'.$this->controller.'.php';
+        $f=$this->rootdir.'/'.$GLOBALS['CnsPHP_base'].'/Controller/'.$this->module.'/'.$this->controller.'.php';
         if(file_exists($f))
         {
-            include($f);
-            $cname=__NAMESPACE__."\\".$this->controller;
+            $cname="CnsPHP\\Controller\\".($this->module)."\\".($this->controller);
             (new $cname())->{$this->method}($this->args);
         }
         else
