@@ -7,10 +7,11 @@ class Controller {
     public static $uri = "";
 
     public static $module = "";
-    public static $view = null;
     public static $controller = "";
     public static $method = "";
     public static $args = [];
+
+    public static $view = null;
 
     private static function parseURI(){
         self::$uri=$_SERVER['REQUEST_URI'];
