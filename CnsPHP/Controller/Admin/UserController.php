@@ -13,7 +13,7 @@ class UserController extends Controller {
         if(!isset($_POST['htmldata']))
         {
             // {"code":2, "msg":"invalid request", "data":[]}
-            return User::msg(2,'invalid request');
+            return self::msg(2,'invalid request');
         }
 
         $f="statics/htdocs/iframecanvas.html";
@@ -21,17 +21,17 @@ class UserController extends Controller {
 
         if($c===FALSE)
         {
-            return User::msg(3,'open file failed');
+            return self::msg(3,'open file failed');
         }
 
         $c=str_replace('<div id="start_interposition"></div>','<div id="start_interposition"></div>'.$_POST['htmldata'],$c);
         if(file_put_contents($f,$c) !== FALSE)
         {
-            return User::msg(1,'success');
+            return self::msg(1,'success');
         }
         else
         {
-            return User::msg(4,'write file failed');
+            return self::msg(4,'write file failed');
         }
     }
 

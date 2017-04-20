@@ -13,12 +13,12 @@ date_default_timezone_set("Asia/Shanghai");
 
 //config
 //CnsPHP相对于index.php的目录位置
-$GLOBALS['CnsPHP_base']    = "CnsPHP";
-$GLOBALS['CnsPHP_db_host'] = "localhost";
-$GLOBALS['CnsPHP_db_port'] = "3306";
-$GLOBALS['CnsPHP_db_name'] = "dbname";
-$GLOBALS['CnsPHP_db_user'] = "user";
-$GLOBALS['CnsPHP_db_pass'] = "pass";
+$GLOBALS['CnsPHP']['base']    = "CnsPHP";
+$GLOBALS['CnsPHP']['db']['host'] = "localhost";
+$GLOBALS['CnsPHP']['db']['port'] = "3306";
+$GLOBALS['CnsPHP']['db']['name'] = "dbname";
+$GLOBALS['CnsPHP']['db']['user'] = "user";
+$GLOBALS['CnsPHP']['db']['pass'] = "pass";
 
 //autoload class
 spl_autoload_register( function ($class) {
@@ -45,4 +45,4 @@ spl_autoload_register( function ($class) {
 });
 
 //include tpl smarty
-include($GLOBALS['CnsPHP_base']."/Smarty/Smarty.class.php");
+include($GLOBALS['CnsPHP']['base']."/Smarty/Smarty.class.php");

@@ -69,7 +69,7 @@ class Controller {
         self::$view->left_delimiter = '<!--{';
         self::$view->right_delimiter = '}-->';
 
-        $f=self::$rootdir.'/'.$GLOBALS['CnsPHP_base'].'/Controller/'.self::$module.'/'.self::$controller.'Controller.php';
+        $f=self::$rootdir.'/'.$GLOBALS['CnsPHP']['base'].'/Controller/'.self::$module.'/'.self::$controller.'Controller.php';
         if(file_exists($f))
         {
             $cname="CnsPHP\\Controller\\".(self::$module)."\\".(self::$controller)."Controller";

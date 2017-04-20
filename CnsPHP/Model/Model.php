@@ -192,11 +192,11 @@ class CnsDB {
         self::init();
         try {
             if($host=="" && $dbname=="" && $user=="" && $pass==""){
-                $host   = $GLOBALS['CnsPHP_db_host'];
-                $dbname = $GLOBALS['CnsPHP_db_name'];
-                $port   = $GLOBALS['CnsPHP_db_port'];
-                $user   = $GLOBALS['CnsPHP_db_user'];
-                $pass   = $GLOBALS['CnsPHP_db_pass'];
+                $host   = $GLOBALS['CnsPHP']['db']['host'];
+                $dbname = $GLOBALS['CnsPHP']['db']['name'];
+                $port   = $GLOBALS['CnsPHP']['db']['port'];
+                $user   = $GLOBALS['CnsPHP']['db']['user'];
+                $pass   = $GLOBALS['CnsPHP']['db']['pass'];
             }
             self::$conn = new \PDO('mysql:host='.$host.';port='.$port.';dbname='.$dbname,$user,$pass) or die(get_called_class().':'.__METHOD__);
             return get_called_class();
