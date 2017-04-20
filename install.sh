@@ -7,7 +7,7 @@ mv CnsPHP-master/* ./
 rm -fr CnsPHP.zip CnsPHP-master
 
 nginxuser=$(ps -ef |grep "nginx: worker process" | grep -v "grep"|head -1 |awk '{print $1}')
-chown -R "${nginxuser}" tpl/config tpl/cache tpl/compile 
+chown -R "${nginxuser}" tpl/config tpl/cache tpl/compile CnsPHP/logs 
 
 #install smarty
 cd CnsPHP
