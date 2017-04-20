@@ -1,17 +1,25 @@
 <?php
 namespace CnsPHP\Common;
 
+
 class Str {
     public static function echoln($msg) {
         echo "$msg\n";
     }
 
     /**
-    * Str::validate($var,'int',10,100);
-    */
-    public static function validate($var,$type,$min=0,$max=0)
+     * var_dump(Str::validate(['var'=>"xxxx", 'type'=>'int']));
+     * var_dump(Str::validate(['var'=>"xxxx", 'type'=>'int_range', 'min'=>0, 'max'=>0]));
+     * var_dump(Str::validate(['var'=>"xxxx", 'type'=>'other', 'regex'=>'/^\d+$/' ]));
+     */
+    public static function validate($arrArg)
     {
-        $arr = [
+        if(gettype($arrArg) != "array")
+            return false;
+
+        extract($arrArg);
+
+        @$arr = [
             'int'        => [FILTER_VALIDATE_INT],
             'int_range'  => [FILTER_VALIDATE_INT,['options'=>['min_range'=>$min,'max_range'=>$max]]],
             'oct'        => [FILTER_VALIDATE_INT,['flags'=>FILTER_FLAG_ALLOW_OCTAL]],
@@ -48,6 +56,7 @@ class Str {
             'chinese'    => '/[\x{4e00}-\x{9fa5}]/u',
             'alpha_num_underline'         => '/^\w+$/',
             'alpha_num_underline_chinese' => '/^[\x{4e00}-\x{9fa5}_a-zA-Z0-9]+$/u',
+            'other'      => ''
         ];
 
         $rtv = function($var){
@@ -57,9 +66,19 @@ class Str {
                 return true;
         };
 
-        if(gettype($arr[$type]) == 'array')
+        if($type == 'other')
         {
-
+            if(preg_match($regex,$var,$match) == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else if(gettype($arr[$type]) == 'array')
+        {
             if(count($arr[$type]) > 1)
             {
                 list($filter,$opt) = $arr[$type];
@@ -71,7 +90,7 @@ class Str {
                 return $rtv(filter_var($var,$filter));
             }
         }
-        else
+        else if(gettype($arr[$type]) == 'string')
         {
             if(preg_match($arr[$type],$var,$match) == 0)
             {
