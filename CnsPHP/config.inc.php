@@ -46,3 +46,30 @@ spl_autoload_register( function ($class) {
 
 //include tpl smarty
 include($GLOBALS['CnsPHP']['base']."/Smarty/Smarty.class.php");
+
+//referer check
+if(!referer_check())
+    die('invalid request!!!');
+
+function referer_check()
+{
+    if($_SERVER['REQUEST_URI'] == '/' || $_SERVER['REQUEST_URI'] == '/index.php')
+        return true;
+
+    if(!isset($_SERVER['HTTP_REFERER']))
+        return false;
+
+    $arr = [
+       'http://ppt.yiyaozg.com'
+    ];
+
+    $valid = false;
+    foreach($arr as $refer)
+    {
+       if(strpos($_SERVER['HTTP_REFERER'], $refer) === 0)
+       {
+           return true;
+       }
+    }
+    return false;
+}

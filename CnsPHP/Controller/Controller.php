@@ -18,11 +18,18 @@ class Controller {
 
         self::$uri=ltrim(self::$uri,'/');
         $arr=preg_split('/\//',self::$uri);
-
-        self::$module=self::replaceGap($arr[0]);
-        self::$controller=self::replaceGap($arr[1]);
-        self::$method = self::replaceGap($arr[2]);
-
+        if(self::$uri == '/' || self::$uri='/index.php') // count($arr) <= 1 && $arr[0]=="" || $arr[0] == 'index.php')
+        {
+            self::$module='Front';
+            self::$controller='Index';
+            self::$method = 'index';
+        }
+        else
+        {
+            self::$module=self::replaceGap($arr[0]);
+            self::$controller=self::replaceGap($arr[1]);
+            self::$method = self::replaceGap($arr[2]);
+         }
         array_shift($arr);
         array_shift($arr);
         array_shift($arr);
