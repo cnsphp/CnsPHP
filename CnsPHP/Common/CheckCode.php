@@ -28,6 +28,7 @@ class UserController extends Controller {
     }
 }
 */
+
 class CheckCode {
     public static function create($width = 100, $height = 50, $num = 4, $type = 'jpeg') {
         $img = imagecreate($width, $height);

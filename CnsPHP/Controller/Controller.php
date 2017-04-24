@@ -13,26 +13,50 @@ class Controller {
 
     public static $view = null;
 
+    private static function controller_exists($controller_file,$method) {
+         return (file_exists($controller_file) && preg_match('/ public static function '.$method.'\(/',file_get_contents($controller_file)) >= 1 );
+    }
+
     private static function parseURI(){
         self::$uri=ltrim($_SERVER['REQUEST_URI'],'/');
         $arr=preg_split('/\//',self::$uri);
-
-        if(self::$uri == '' || self::$uri == '/' || self::$uri == "index.php" || self::$uri=='/index.php')
+        
+        if(self::$uri == '' || self::$uri == "index.php")
         {
             self::$module='Front';
             self::$controller='Index';
             self::$method = 'Index';
         }
-        else
+        else if(count($arr)==2)
+        {
+            self::$module=$GLOBALS['CnsPHP']['default']['module'];
+            self::$controller=self::replaceGap($arr[0]);
+            self::$method = self::replaceGap($arr[1]);
+            
+            array_shift($arr);
+            array_shift($arr);
+        }
+        else if(count($arr) >=3)
         {
             self::$module=self::replaceGap($arr[0]);
             self::$controller=self::replaceGap($arr[1]);
             self::$method = self::replaceGap($arr[2]);
-         }
+            array_shift($arr);
+            array_shift($arr);
+            array_shift($arr);
+        }
+        else
+        {
+            die("invalid request 1");
+        }
 
-        array_shift($arr);
-        array_shift($arr);
-        array_shift($arr);
+        //check whether module / controller / method all ok
+        $controller_file = self::$rootdir.'/'.$GLOBALS['CnsPHP']['base'].'/Controller/'.self::$module.'/'.self::$controller.'Controller.php';
+        if(!self::controller_exists($controller_file,self::$method))
+        {
+            die("invalid request 2");
+        }
+
         while(@list($arg,$val) = $arr)
         {
             array_shift($arr);

@@ -19,6 +19,7 @@ $GLOBALS['CnsPHP']['db']['port'] = "3306";
 $GLOBALS['CnsPHP']['db']['name'] = "dbname";
 $GLOBALS['CnsPHP']['db']['user'] = "user";
 $GLOBALS['CnsPHP']['db']['pass'] = "pass";
+$GLOBALS['CnsPHP']['default']['module'] = 'Front';
 
 //autoload class
 spl_autoload_register( function ($class) {
