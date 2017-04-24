@@ -2,44 +2,31 @@
 namespace CnsPHP\Common;
 
 /*
-//checkcode.php
-session_start();
-if(isset($_GET['key'])&&isset($_GET['act']))
-{
-    $key=addslashes($_GET['key']);
-    $act=addslashes($_GET['act']);
+<?php
+//...
+class UserController extends Controller {
 
-    if($act == 'check')
-    {
-       echo $_SESSION[$key];
+    public static function Login($args=[]){
+       if(!isset($_SESSION['auth_login_check_code']) || $_SESSION['auth_login_check_code'] != $_POST['checkcode'])
+       {
+           return self::msg(2,'invalid check code');
+       }
+       else
+       {
+           $_SESSION['auth_login_check_code']='';
+       }
+
+       //...
     }
-    elseif($act == 'new')
-   {
-       include("class/CheckCode.inc.php");
-       $code=\QCourse\CheckCode::create(90,25);
-       $_SESSION[$key]=$code;
+
+    public static function LoginCheckcode($args=[]){
+       $act = $args['act'];
+
+       if($act == 'new'){
+          $_SESSION['auth_login_check_code']=CheckCode::create(90,25);
+       }
     }
 }
-
-//checkcode.html
-<script src="https://code.jquery.com/jquery-1.11.3.js"></script>
-<script>
-$(function(){
-    $("input").click(function(){
-        $.get("checkcode.php?key=logcode&act=check",function(code){
-        if($("input").val() == code) 
-            alert("ok");
-        else
-            alert("false");
-        })
-    });
-
-    $("img").click(function(){
-        $(this).attr("src","checkcode.php?key=logcode&act=check");
-    });
-});
-</script>
-<input type="text" value="" ><img src="checkcode.php?act=new&key=logcode" style="cursor:hand" >
 */
 class CheckCode {
     public static function create($width = 100, $height = 50, $num = 4, $type = 'jpeg') {
