@@ -20,7 +20,7 @@ class Controller {
         {
             self::$module='Front';
             self::$controller='Index';
-            self::$method = 'index';
+            self::$method = 'Index';
         }
         else
         {
