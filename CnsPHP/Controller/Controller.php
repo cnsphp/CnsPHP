@@ -16,9 +16,7 @@ class Controller {
     private static function parseURI(){
         self::$uri=$_SERVER['REQUEST_URI'];
 
-        self::$uri=ltrim(self::$uri,'/');
-        $arr=preg_split('/\//',self::$uri);
-        if(self::$uri == '/' || self::$uri='/index.php') // count($arr) <= 1 && $arr[0]=="" || $arr[0] == 'index.php')
+        if(self::$uri == '' || self::$uri == '/' || self::$uri == "index.php" || self::$uri=='/index.php')
         {
             self::$module='Front';
             self::$controller='Index';
@@ -26,10 +24,14 @@ class Controller {
         }
         else
         {
+            self::$uri=ltrim(self::$uri,'/');
+            $arr=preg_split('/\//',self::$uri);
+
             self::$module=self::replaceGap($arr[0]);
             self::$controller=self::replaceGap($arr[1]);
             self::$method = self::replaceGap($arr[2]);
          }
+
         array_shift($arr);
         array_shift($arr);
         array_shift($arr);
