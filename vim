@@ -725,6 +725,8 @@ function GetFuncDefine()
 endfunc
 
 "colorscheme editplus
+" cd ~/.vim/colors/
+" wget -O codeblocks-dark.vim http://www.vim.org/scripts/download_script.php?src_id=22646
 colorscheme codeblocks-dark
 
 let g:EchoFuncShowOnStatus = 1
