@@ -1,3 +1,8 @@
+.快捷键
+ c-x c-o 显示函数原型
+ c-n     显示下一条
+ c-p     显示上一条
+
 .vim 安装配置
     Bundle / astyle / clang-format / comments / cscope / JsBeautify / mru / omnicomplete / Syntastic / tagbar 
 Taglist / winmanager / vim-airline / xdebug.php / ZenCoding.vim / matchit.zip / UltiSnips / YouComplateMe / eclim
