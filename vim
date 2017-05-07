@@ -10,6 +10,9 @@ Taglist / winmanager / vim-airline / xdebug.php / ZenCoding.vim / matchit.zip / 
     sudo ln -s /usr/bin/nodejs  /usr/bin/node
 
     git clone https://github.com/VundleVim/Vundle.vim.git  ~/.vim/bundle/Vundle.vim
+    
+    mkdir ~/.vim/colors/
+    wget -O ~/.vim/colors/codeblocks-dark.vim http://www.vim.org/scripts/download_script.php?src_id=22646
 
 ////////////////////////////////////////////////////////
 
@@ -625,6 +628,8 @@ function GetFuncDefine()
 endfunc
 
 "colorscheme editplus
+"mkdir ~/.vim/colors/
+"wget -O ~/.vim/colors/codeblocks-dark.vim http://www.vim.org/scripts/download_script.php?src_id=22646
 colorscheme codeblocks-dark
 
 let g:EchoFuncShowOnStatus = 1
