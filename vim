@@ -327,7 +327,7 @@ let g:ycm_show_diagnostics_ui = 0
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
 "回车即选中当前项"
-inoremap <expr> <CR>       pumvisible() ? '<C-y>' : '\<CR>'
+inoremap <expr> <CR>       pumvisible() ? '<C-y>' : '<CR>'
 
 "上下左右键行为"
 inoremap <expr> <Down>     pumvisible() ? '\<C-n>' : '\<Down>'
