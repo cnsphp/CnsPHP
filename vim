@@ -14,15 +14,10 @@ Taglist / winmanager / vim-airline / xdebug.php / ZenCoding.vim / matchit.zip / 
 ////////////////////////////////////////////////////////
 
 2) vim ~/.vimrc
-
-set sw=4 expandtab ts=4
-set ai ci si
-"""""""""""""""""" 基础 """"""""""""""""""
-"""""""""""""""""" 基础 """"""""""""""""""
 "兼容模式
 set nocompatible
 
-"开启语法高亮
+"默认为关闭
 syntax on
 set hlsearch
 
@@ -32,8 +27,6 @@ set cindent
 set smartindent
 let g:html_indent_inctags = "html,body,head,tbody"
 
-"文件
-"---------------------------------------
 set wildignore+=*.so,*.o,*.rar,*.out,*.deb,*.exe,*.mp3,*.jpeg,*.bmp,*.gif,*.png,*.a,*.obj,*.swp,*.zip,*.pyc,*.pyo,*.class
 
 "文件编码
@@ -43,20 +36,20 @@ set termencoding=&encoding
 set fencs=utf-8,ansii,ucs-bom,gb18030,cp936,big5
 
 if has("gui_running")
-   set helplang=cn
-   set langmenu=zh_CN.utf-8
+    set helplang=cn
+    set langmenu=zh_CN.utf-8
 
-   language messages zh_CN.UTF-8
+    language messages zh_CN.UTF-8
 
-   source $VIMRUNTIME/delmenu.vim
-   source $VIMRUNTIME/menu.vim
+    source $VIMRUNTIME/delmenu.vim
+    source $VIMRUNTIME/menu.vim
 endif
 
 "使用unix文件格式
 set ffs=unix,dos,mac
 
 "打开文件光标定位到上次编辑的地方
- au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 "保存文件时删除多余空格
 fun! <SID>StripTrailingWhitespaces()
@@ -122,13 +115,6 @@ set tm=500
 
 "设置历史
 set history=2000
-
-
-""""""""""""""""""" 编程 """"""""""""""""""
-
-"ctags
-"  补全  C-x C-o
-"  定义  C-]  按c-t或c-o返回
 
 "ctags --c-types=f -f ~/.vim/ctags/ctag -R /usr/include/
 set tags+=~/.vim/ctags/ctag
@@ -206,11 +192,9 @@ fun! ToggleFold()
 endfun
 
 "html indent
-"let g:html_indent_inctags = "html,body,head,tbody"
-"let g:html_indent_script1 = "inc"
-"let g:html_indent_style1 = "inc"
-
-"""""""""""""""""" 编程 """"""""""""""""""
+let g:html_indent_inctags = "html,body,head,tbody"
+let g:html_indent_script1 = "inc"
+let g:html_indent_style1 = "inc"
 
 "gui
 if has("gui_running")
@@ -240,14 +224,7 @@ if has("gui_running")
     endif
 endif
 
-"""""""""""""""""" ~基础 """"""""""""""""""
-"""""""""""""""""" ~基础 """"""""""""""""""
-
-
-"""""""""""""""""" 插件 """"""""""""""""""
-"""""""""""""""""" 插件 """"""""""""""""""
-
-""""""""""""""""""" bundle """"""""""""""""
+""""""""""""""""" Vundle """"""""""""""""""""""""
 filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -259,6 +236,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
 
 "语法检查
+Plugin 'mbbill/echofunc'
 Plugin 'scrooloose/syntastic'
 
 "函数及关键字片段
@@ -266,20 +244,20 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 
 "支持html标签按%跳转
-"if expand('%:e') == "php" || expand('%:e') == "html"
-	Bundle 'ZenCoding.vim'
-	Bundle 'matchit.zip'
-	Bundle 'othree/html5.vim'
-"endif
+if expand('%:e') == "php" || expand('%:e') == "html"
+    Bundle 'ZenCoding.vim'
+    Bundle 'matchit.zip'
+    Bundle 'othree/html5.vim'
+endif
 
-"PHP关键字上按K显示Manaul, 与Ycm冲突
+""PHP关键字上按K显示Manaul, 与Ycm冲突
 "if expand('%:e') == "php"
-	"Bundle 'spf13/PIV'
+"Bundle 'spf13/PIV'
 "endif
 
 if has("gui_running")
-  "gvim下打开过的文件历史
-	Plugin 'mru.vim'
+    "gvim下打开过的文件历史
+    Plugin 'mru.vim'
 endif
 
 "IDE窗口集成
@@ -289,135 +267,72 @@ Plugin 'majutsushi/tagbar'
 Plugin 'moll/vim-bbye'
 
 "状态栏
-"Bundle 'bling/vim-airline'
+Bundle 'bling/vim-airline'
 
 "js语法
 if expand('%:e') == "js"
-  Bundle 'JavaScript-syntax'
-  Bundle 'jQuery'
+    Bundle 'JavaScript-syntax'
+    Bundle 'jQuery'
 endif
-Plugin 'mbbill/echofunc'
+
 call vundle#end()
 
-filetype on
-filetype indent on
-filetype plugin on
 "filetype 文件类型探测
 "plugin   使用文件类型相关的插件
 "indent   使用缩进
 filetype plugin indent on
 
-""""""""""""""""""" ~bundle """""""""""""""
+""""""""""""""""""" ~Vundle """""""""""""""
 
 
-"""""""" Autocomplete C-t / C-x C-o  暂不需要，由YouCompleteMe代替"""""""
-"set omnifunc output omnifunc=jedi#complete
-"autocmd FileType python     set omnifunc=pythoncomplete#Complete
-"autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-"autocmd FileType html       set omnifunc=htmlcomplete#CompleteTags
-"autocmd FileType css        set omnifunc=csscomplete#CompleteCSS
-"autocmd FileType xml        set omnifunc=xmlcomplete#CompleteTags
-"autocmd FileType php        set omnifunc=phpcomplete#CompletePHP
-"autocmd FileType c          set omnifunc=ccomplete#Complete
-"if has("autocmd")
-"  autocmd Filetype java setlocal omnifunc=javacomplete#Complete
-"  autocmd Filetype java setlocal completefunc=javacomplete#CompleteParamsInfo
-"endif
-""""""""""""""""" Autocomplete C-t / C-x C-o  """""""""""""""""
+"""""""""""""""""" YouCompleteMe """""""""""""""
+"默认配置文件路径"
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
-""""""""""""""" YouCompleteMe """"""""""""""""""""""
-":YcmDebugInfo 看是否有问题
-"
-let g:EclimCompletionMethod = 'omnifunc'
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-
-let g:ycm_semantic_triggers =  {
-           	\             'java' : ['.'],
-            \             'c' : ['->', '.'],
-            \        	 'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',  're!\[.*\]\s'],
-            \    			'ocaml' : ['.', '#'],
-            \    'cpp,objcpp' : ['->', '.', '::'],
-            \          'perl' : ['->'],
-            \           'php' : ['->', '::'],
-            \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-            \          'ruby' : ['.', '::'],
-            \           'lua' : ['.', ':'],
-            \        'erlang' : [':'],
-            \ }
-
-""""代码补全 显示提示和预览窗口，python时更有用
-set completeopt=longest,menuone
-set complete=.,w,b,k,t,i
-
-""""回车即选中当前项
-inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
-
-"""上下左右键的行为 会显示其他信息
-inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
-
-"记住上次的补全方式,直到按ESC退出插入模式为止
-let g:SuperTabRetainCompletionType=2
-
-"不显示开启vim时检查ycm_extra_conf文件的信息
+"打开vim时不再询问是否加载ycm_extra_conf.py配置"
 let g:ycm_confirm_extra_conf=0
+set completeopt=longest,menu
 
-"开启基于tag的补全，可以在这之后添加需要的标签路径
-let g:ycm_collect_identifiers_from_tags_files=1
+"python解释器路径"
+let g:ycm_path_to_python_interpreter='/usr/bin/python'
 
-"注释和字符串中的文字也会被收入补全
+"是否开启语义补全"
+let g:ycm_seed_identifiers_with_syntax=1
+
+"是否在注释中也开启补全"
+let g:ycm_complete_in_comments=1
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 
-"输入第1个字符开始补全
+"开始补全的字符数"
 let g:ycm_min_num_of_chars_for_completion=1
 
-"禁止缓存匹配项,每次都重新生成匹配项
-"let g:ycm_cache_omnifunc=0
-
-"设置为0则会使用syntastic, 设置为1则不会使用syntastic进行语法检查
-"let g:ycm_show_diagnostics_ui = 0
-
-let g:ycm_autoclose_preview_window_after_completion =1
+"补全后自动关机预览窗口"
+let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 
-set conceallevel=2
-set concealcursor=vin
-let g:clang_snippets=1
-let g:clang_conceal_snippets=1
-let g:clang_snippets_engine='clang_complete' "'ultisnips' "clang_complete,
-"
-set pumheight=10
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType ="<C-X><C-O>"
-let g:clang_complete_auto=1
-let g:clang_auto_select=2
+" 禁止缓存匹配项,每次都重新生成匹配项"
+let g:ycm_cache_omnifunc=0
 
-let g:ycm_seed_identifiers_with_syntax=1
-"在注释输入中也能补全
-let g:ycm_complete_in_comments = 1
-"在字符串输入中也能补全
+"字符串中也开启补全"
 let g:ycm_complete_in_strings = 1
-" 设置在下面几种格式的文件上屏蔽ycm
-let g:ycm_filetype_blacklist = {
-      \ 'tagbar' : 1,
-      \ 'nerdtree' : 1,
-      \}
-"youcompleteme  默认tab  s-tab 和 ultisnips 冲突
-let g:ycm_key_list_select_completion = ['<Down>']
-let g:ycm_key_list_previous_completion = ['<Up>']
 
-"设置跳转的快捷键，可以跳转到definition和declaration
-let mapleader = ','   ",gc即<,-g> <,-c>
-nmap <c-g> :YcmCompleter GoToDefinitionElseDeclaration <C-R>=expand("<cword>")<CR><CR>
+"设置为0则会使用syntastic, 设置为1则不会使用syntastic进行语法检查
+let g:ycm_show_diagnostics_ui = 0
 
-nnoremap <leader>gc :YcmCompleter GoToDeclaration<CR>
-nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
 
-"nmap <F4> :YcmDiags<CR>
-"""""""""""""""" ~YouCompleteMe """""""""""""""""""""
+"离开插入模式后自动关闭预览窗口"
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
+"回车即选中当前项"
+inoremap <expr> <CR>       pumvisible() ? '<C-y>' : '\<CR>'
+
+"上下左右键行为"
+inoremap <expr> <Down>     pumvisible() ? '\<C-n>' : '\<Down>'
+inoremap <expr> <Up>       pumvisible() ? '\<C-p>' : '\<Up>'
+inoremap <expr> <PageDown> pumvisible() ? '\<PageDown>\<C-p>\<C-n>' : '\<PageDown>'
+inoremap <expr> <PageUp>   pumvisible() ? '\<PageUp>\<C-p>\<C-n>' : '\<PageUp>'
+
+"""""""""""""""""" ~YouCompleteMe """""""""""""""
 
 """""""""""""" syntastic """"""""""""""""""""""""""
 let g:statline_syntastic = 1
@@ -504,8 +419,8 @@ endif
 :endfunction
 
 
-:au BufNewFile,BufRead *.c,*.h,*cs,*.php,*.java,*.cpp,*.py :call CreateCscope()
-"""""""""""""""" ~cscope """""""""""""""""""""""""""""
+au BufNewFile,BufRead *.c,*.h,*cs,*.php,*.java,*.cpp,*.py :call CreateCscope()
+"""""""""""""" ~cscope """""""""""""""""""""""""""""
 
 
 """""""""""""""" WinManager """""""""""""""""""""
@@ -516,14 +431,15 @@ imap <F3> <Esc>:WMToggle<CR>
 map <F4>       :Tagbar<CR>
 imap <F4> <Esc>:Tagbar<CR>
 
-"工具栏
-an 1.120 ToolBar.-sep120-		<Nop>
-an icon=/usr/share/icons/gnome/16x16/actions/redhat-home.png 1.120 ToolBar.WMToggle :WMToggle<CR>
-an icon=/usr/share/icons/gnome/16x16/actions/gnome-stock-text-unindent.png 1.120 ToolBar.TagbarToggle :TagbarToggle<CR>
+if has("gui_running")
+    "工具栏
+    an 1.120 ToolBar.-sep120-		<Nop>
+    an icon=/usr/share/icons/gnome/16x16/actions/redhat-home.png 1.120 ToolBar.WMToggle :WMToggle<CR>
+    an icon=/usr/share/icons/gnome/16x16/actions/gnome-stock-text-unindent.png 1.120 ToolBar.TagbarToggle :TagbarToggle<CR>
 
-tmenu ToolBar.WMToggle      WMToggle
-tmenu ToolBar.TagbarToggle  TagbarToggle
-
+    tmenu ToolBar.WMToggle      WMToggle
+    tmenu ToolBar.TagbarToggle  TagbarToggle
+endif
 
 "winmanager
 let g:winManagerWindowLayout='FileExplorer'
@@ -532,9 +448,6 @@ let g:AutoOpenWinManager=0
 let g:persistentBehaviour=0
 "不显示隐藏文件
 let g:explShowHiddenFiles = 0
-
-"minibuffer
-"map <C-tab> :bnext<CR>
 
 
 "关闭Buffer命令
@@ -561,37 +474,37 @@ let g:tagbar_sort = 0
 let g:tagbar_compact = 1
 " tag for coffee
 if executable('coffeetags')
-  let g:tagbar_type_coffee = {
-        \ 'ctagsbin' : 'coffeetags',
-        \ 'ctagsargs' : '',
-        \ 'kinds' : [
-        \ 'f:functions',
-        \ 'o:object',
-        \ ],
-        \ 'sro' : ".",
-        \ 'kind2scope' : {
-        \ 'f' : 'object',
-        \ 'o' : 'object',
-        \ }
-        \ }
+    let g:tagbar_type_coffee = {
+                \ 'ctagsbin' : 'coffeetags',
+                \ 'ctagsargs' : '',
+                \ 'kinds' : [
+                \             'f:functions',
+                \             'o:object',
+                \ ],
+                \ 'sro' : ".",
+                \ 'kind2scope' : {
+                \                  'f' : 'object',
+                \                  'o' : 'object',
+                \ }
+                \ }
 
-  let g:tagbar_type_markdown = {
-    \ 'ctagstype' : 'markdown',
-    \ 'sort' : 0,
-    \ 'kinds' : [
-        \ 'h:sections'
-    \ ]
-    \ }
+    let g:tagbar_type_markdown = {
+                \ 'ctagstype' : 'markdown',
+                \ 'sort' : 0,
+                \ 'kinds' : [
+                \ 'h:sections'
+                \ ]
+                \ }
 endif
 
 "tagbar
 "如果是c语言的程序的话，tagbar自动开启
 autocmd BufReadPost  *.php,*.js,*.java,*.cs,*.cpp,*.c,*.h,*.cc,*.py,*.sh  call tagbar#autoopen()
 
-""""""""""""""" ~tagbar """""""""""""""""
+"""""""""""""" ~tagbar """""""""""""""""
 
 
-"""""""""""""""" UltiSnips """""""""""""""""""""""
+""""""""""""""" UltiSnips """""""""""""""""""""""
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsEditSplit="vertical"
 "let g:UltiSnipsListSnippets="<c-e>"
@@ -610,11 +523,6 @@ set hidden
 
 set clipboard+=unnamed      " 共享外部剪贴板
 set autochdir               " 设定文件浏览器目录为当前目录
-
-filetype indent on          " 针对不同的文件类型采用不同的缩进格式
-filetype plugin on          " 针对不同的文件类型加载对应的插件
-filetype plugin indent on
-filetype on
 
 "set termencoding=utf-8 "编码转换
 
@@ -645,92 +553,86 @@ if has("gui_running")
     behave mswin
 endif
 
-"set showtabline=2
-set cmdheight=2
+set showtabline=3
+set cmdheight=1
 set listchars=tab:\|\ ,
 
-"退格键
-set backspace=1
-set backspace=indent,eol,start
-set whichwrap=b,s,<,>,[,]
-map <BS> hx
-
-imap <c-f>  <Esc><c-f>i
-
-imap <c-b>  <Esc><c-b>i
-
-
-vmap <c-d>  <CR>
-imap <c-d>  <CR>
-map <c-d>   i<CR><Esc>
-
-
+"imap <c-f>  <Esc><c-f>i
+"
+"imap <c-b>  <Esc><c-b>i
+"
+"vmap <c-d>  <CR>
+"imap <c-d>  <CR>
+"map <c-d>   i<CR><Esc>
+"
 imap <c-t>  <Esc>:bn<CR>i
 map  <c-t>  :bn<CR>
-imap <c-tab>  <Esc>:bn<CR>i
-map  <c-tab>  :bn<CR>
-
-imap <c-e>  <Esc><Esc>:join<CR>i
-map <c-e>  :join<CR>
-
-imap <c-h>   <left>
-imap <c-j>   <down>
-imap <c-k>   <up>
-imap <c-l>   <right>
-
-map <c-h>   <left>
-map <c-j>   <down>
-map <c-k>   <up>
-map <c-l>   <right>
+"imap <c-tab>  <Esc>:bn<CR>i
+"map  <c-tab>  :bn<CR>
+"
+"imap <c-e>  <Esc><Esc>:join<CR>i
+"map <c-e>  :join<CR>
+"
+"imap <c-h>   <left>
+"imap <c-j>   <down>
+"imap <c-k>   <up>
+"imap <c-l>   <right>
+"
+"map <c-h>   <left>
+"map <c-j>   <down>
+"map <c-k>   <up>
+"map <c-l>   <right>
 
 "#到行首
-map # ^
+"map # ^
 
 map <space>  <Esc>i <Esc>l
-"""""""""""""""" ~快捷键 """"""""""""""""""
+""""""""""""""" ~快捷键 """"""""""""""""""
 
 """""""""""""""" Beautify """"""""""""""""
 function Beautify()
-   let ext = expand("%:e")
-   let f = expand("%")
+    let ext = expand("%:e")
+    let f = expand("%")
 
-   if ext == "java"
-   elseif ext == "html"
+    if ext == "java"
+    elseif ext == "html"
 
-      silent! execute "! html-beautify % > %.tmp; cp % %.bak; cp -f %.tmp % 2>/dev/null"
+        silent! execute "! html-beautify % > %.tmp; cp % %.bak; cp -f %.tmp % 2>/dev/null"
 
-      "reload file
-      :edit!
-   elseif ext == "js"
-         silent! execute "! js-beautify % > %.tmp; cp % %.bak; cp -f %.tmp % 2>/dev/null"
+        "reload file
+        :edit!
+    elseif ext == "js"
+        silent! execute "! js-beautify % > %.tmp; cp % %.bak; cp -f %.tmp % 2>/dev/null"
 
-      "reload file
-      :edit!
-   elseif ext == "css"
-         silent! execute "! css-beautify % > %.tmp; cp % %.bak; cp -f %.tmp % 2>/dev/null"
+        "reload file
+        :edit!
+    elseif ext == "css"
+        silent! execute "! css-beautify % > %.tmp; cp % %.bak; cp -f %.tmp % 2>/dev/null"
 
-      "reload file
-      :edit!
-   elseif ext == "c" || ext == "cpp"
-      silent! execute "! clang-format % > %.tmp; cp % %.bak; cp -f %.tmp % 2>/dev/null"
+        "reload file
+        :edit!
+    elseif ext == "c" || ext == "cpp"
+        silent! execute "! clang-format % > %.tmp; cp % %.bak; cp -f %.tmp % 2>/dev/null"
 
-      "reload file
-      :edit!
-   endif
+        "reload file
+        :edit!
+    endif
 endfunction
-"""""""""""""""" ~Beautify """"""""""""""""
+""""""""""""""" ~Beautify """"""""""""""""
 
 function GetFuncDefine()
 
 endfunc
 
 "colorscheme editplus
-" cd ~/.vim/colors/
-" wget -O codeblocks-dark.vim http://www.vim.org/scripts/download_script.php?src_id=22646
 colorscheme codeblocks-dark
 
 let g:EchoFuncShowOnStatus = 1
 let g:EchoFuncLangsUsed = ["java","cpp", "c"]
+
+"退格键
+set backspace=indent,eol,start
+set whichwrap=b,s,<,>,[,]
 
 ////////////////////////////////////////////////////////
 
