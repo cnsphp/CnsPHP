@@ -1,5 +1,4 @@
 <?php
-
 namespace CnsPHP\Controller;
 
 class Auth {
@@ -9,7 +8,7 @@ class Auth {
     */
 	public static function passwd($passwd) {
 		$options = [
-			'cost' => 12
+			'cost' => 88
 		];
 
 		return  password_hash($passwd, PASSWORD_DEFAULT, $options);
@@ -21,7 +20,6 @@ class Auth {
 	public static function passwd_verify($passwd,$hash) {
 		return password_verify($passwd, $hash);
 	}
-
 
    public static function is_login()
    {
