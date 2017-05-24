@@ -1,5 +1,9 @@
 <?php
 //session
+ini_set('session.gc_maxlifetime', 1296000); //15 days
+ini_set('memcache.session_redundancy',3);
+ini_set('session.cookie_lifetime', 1296000);
+
 ini_set('session.save_handler', 'memcached');
 ini_set('session.save_path',    '127.0.0.1:11211');
 session_start();
@@ -13,6 +17,9 @@ date_default_timezone_set("Asia/Shanghai");
 
 //config
 //CnsPHP相对于index.php的目录位置
+$GLOBALS['DOC_ROOT']='/var/www';
+$GLOBALS['DOC_HTML_ROOT']=$GLOBALS['DOC_ROOT'].'/html/ppt.yiyaozg.com';
+
 $GLOBALS['CnsPHP']['base']    = "CnsPHP";
 $GLOBALS['CnsPHP']['db']['host'] = "localhost";
 $GLOBALS['CnsPHP']['db']['port'] = "3306";
@@ -20,6 +27,19 @@ $GLOBALS['CnsPHP']['db']['name'] = "dbname";
 $GLOBALS['CnsPHP']['db']['user'] = "user";
 $GLOBALS['CnsPHP']['db']['pass'] = "pass";
 $GLOBALS['CnsPHP']['default']['module'] = 'Front';
+
+$GLOBALS['CnsPHP']['UnAUthMethod'] = [
+    'Register',
+    'Login',
+    'LoginMobile',
+    'LoginMobileCode',
+    'RegisterMobileCode',
+    'ValidEmail',
+    'SendMailActiveLink',
+    'ResetPasswdEmail',
+    'Rspasswd',
+    'Checkcode'
+];
 
 //autoload class
 spl_autoload_register( function ($class) {
