@@ -11,8 +11,8 @@ use CnsPHP\Common\CheckCode as CheckCode;
 class User extends Model {}
 
 class UserController extends Controller {
-    public static function Register($args=[]) {
-       if(!isset($_SESSION['auth_register_check_code']) || $_SESSION['auth_register_check_code'] != $_POST['checkcode'])
+    public static function Register($args, $post, $get) {
+       if(!isset($_SESSION['auth_register_check_code']) || $_SESSION['auth_register_check_code'] != $post['checkcode'])
        {
            return self::msg(2,'invalid check code');
        }
@@ -22,7 +22,7 @@ class UserController extends Controller {
        }
 
 
-       User::insert(['name'=>$_POST['username'],'passwd'=>Auth::passwd($_POST['passwd']),'gender'=>$_POST['gender'],'age'=>$_POST['age'], 'time'=>time()]);  
+       User::insert(['name'=>$post['username'],'passwd'=>Auth::passwd($post['passwd']),'gender'=>$post['gender'],'age'=>$post['age'], 'time'=>time()]);
        if(User::$affectedRows == 1)
            self::msg(1,'register successfully');
        else
@@ -30,7 +30,7 @@ class UserController extends Controller {
     }
 
     public static function Login($args=[]){
-       if(!isset($_SESSION['auth_login_check_code']) || $_SESSION['auth_login_check_code'] != $_POST['checkcode'])
+       if(!isset($_SESSION['auth_login_check_code']) || $_SESSION['auth_login_check_code'] != $post['checkcode'])
        {
            return self::msg(2,'invalid check code');
        }
@@ -39,11 +39,11 @@ class UserController extends Controller {
            $_SESSION['auth_login_check_code']='';
        }
 
-       $username = $_POST['username'];
-       $passwd   = $_POST['passwd'];
-       $arr      = User::getOne(['name'=>$username]);   
+       $username = $post['username'];
+       $passwd   = $post['passwd'];
+       $arr      = User::getOne('uid,username,passwd',['name'=>$username]);
 
-       if(Auth::passwd_verify($_POST['passwd'],$arr['passwd']))
+       if(Auth::passwd_verify($post['passwd'],$arr['passwd']))
        {
            $_SESSION['auth_login_in'] = true;
            return self::msg(1,'login seccuessfully');
@@ -84,7 +84,7 @@ class UserController extends Controller {
     }
 
     public static function Iframe($args=[]){
-        if(!isset($_POST['htmldata']))
+        if(!isset($post['htmldata']))
         {
             // {"code":2, "msg":"invalid request", "data":[]}
             return self::msg(2,'invalid request');
@@ -98,7 +98,7 @@ class UserController extends Controller {
             return self::msg(3,'open file failed');
         }
 
-        $c=str_replace('<div id="start_interposition"></div>','<div id="start_interposition"></div>'.$_POST['htmldata'],$c);
+        $c=str_replace('<div id="start_interposition"></div>','<div id="start_interposition"></div>'.$post['htmldata'],$c);
         if(file_put_contents($f,$c) !== FALSE)
         {
             return self::msg(1,'success');
@@ -148,7 +148,7 @@ class UserController extends Controller {
             echo $result::$affectedRows;
         //~database
 
-        //var_dump($_POST);
+        //var_dump($post);
         //var_dump($args);
         //var_dump($this->view);
 
