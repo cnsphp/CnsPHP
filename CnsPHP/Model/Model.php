@@ -17,10 +17,10 @@ class Model extends CnsDB {
         return get_called_class();
     }
 
-    public static function getOne($arr=[],$sql="") {
+    public static function getOne($fields='*',$arr=[],$sql="") {
         self::init();
         if(strlen($sql) == 0){
-            $sql = "select * from ".self::$tableName; 
+            $sql = "select $fields from ".self::$tableName;
             $sqlsub="";
             foreach($arr as $k=>$v){
                 if(strlen($sqlsub)>0)
@@ -33,13 +33,18 @@ class Model extends CnsDB {
         }
 
         $query=self::query($sql,$arr);
-        if($query)
-            return $query->fetch();
-        else
+        if($query) {
+            $arr = $query->fetch(\PDO::FETCH_ASSOC);
+            self::$error_msg = $query->errorInfo();
+            self::$error_code = $query->errorCode();
+
+            if ($arr)
+                return $arr;
+        }
             return [];
     }
 
-    public static function getAll($arr=[],$sql="") {
+    public static function getAll($fields='*', $arr=[],$sql="") {
         self::init();
 
         if(strlen($sql) == 0){
@@ -56,9 +61,13 @@ class Model extends CnsDB {
         }
 
         $query=self::query($sql,$arr);
-        if($query)
-            return $query->fetchAll();
-        else
+        if($query) {
+            $arr = $query->fetchAll(\PDO::FETCH_ASSOC);
+            self::$error_msg = $query->errorInfo();
+            self::$error_code = $query->errorCode();
+            if ($arr)
+                return $arr;
+        }
             return [];
     }
 
@@ -168,7 +177,7 @@ class Model extends CnsDB {
 
 class CnsDB {
     public static $conn = null;
-
+    public static $sql = "";
     public static $error_code=0;
     public static $error_msg="";
     public static $lastInsertId=0;
@@ -217,7 +226,7 @@ class CnsDB {
         $sql=trim($sql);
         $stmt = (self::$conn)->prepare($sql);
         $result=$stmt->execute($arr);
-
+         self::$sql = $stmt->queryString;
         if($stmt->errorCode()=="00000")
         {
             self::error(0,'');
