@@ -51,15 +51,17 @@
    http://www.a.com/admin/user/get-info/a/b/c/d/e/f
    
    Controller/Admin/User.php
-      public function GetInfo($args=[]) {
-           ...
+      public function GetInfo($args,$post,$get) {
+           $a=$args['a'];
+           $x=$post['x'];
+           $y=$get['y'];
       }
    
    3)
    http://www.a.com/blog/user-admin/get-info/a/b/c/d/e/f
    
    Controller/Blog/UserAdmin.php
-      public function GetInfo($args=[]) {
+      public function GetInfo($args,$post,$get) {
            ...
       }   
    
