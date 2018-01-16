@@ -1,5 +1,5 @@
 <pre>
-.nginx
+<b>.nginx</b>
 #/etc/nginx/sites-enabled/cnsphp.yiyaozg.com 
 server {
     listen 80;
@@ -41,7 +41,7 @@ server {
     }
 }
 
-.php
+<b>.php</b>
 ;/etc/php/7.0/fpm/pool.d/cnsphp.yiyaozg.com.conf
 [cnsphp]
 ;prefix = /data/webs/cnsphp.yiyaozg.com/public
