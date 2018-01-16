@@ -1,4 +1,72 @@
 <pre>
+.nginx
+#/etc/nginx/sites-enabled/cnsphp.yiyaozg.com 
+server {
+    listen 80;
+    server_name cnsphp.yiyaozg.com;
+    root /data/webs/cnsphp.yiyaozg.com/public;
+    index index.htm index.html index.php ;
+
+    error_log /var/log/nginx/error.log;
+    location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    charset utf-8;
+    
+    add_header X-Frame-Options "SAMEORIGN";
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Content-Type-Options "nosniff";
+    index index.html index.php; 
+	
+    location = /favicon.ico {
+        access_log off;
+        log_not_found off;
+    }       
+
+    location = /robots.txt {
+        access_log off;
+        log_not_found off;
+    }
+
+    location ~ \.php$ {
+        include    fastcgi_params;
+        fastcgi_index index.php;
+        fastcgi_pass    127.0.0.1:9006;
+        add_header Access-Control-Allow-Origin *;
+        add_header 'Access-Control-Allow-Credentials' 'true';
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+        add_header 'Access-Control-Allow-Headers' 'DNT,QCTKA,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
+        fastcgi_param  SCRIPT_FILENAME  $document_root/$fastcgi_script_name;
+    }
+}
+
+.php
+;/etc/php/7.0/fpm/pool.d/cnsphp.yiyaozg.com.conf
+[cnsphp]
+;prefix = /data/webs/cnsphp.yiyaozg.com/public
+;chroot = $prefix
+;chdir = /
+user = www-data
+group = www-data
+listen.owner = www-data
+listen.group = www-data
+listen = 127.0.0.1:9006
+pm = dynamic
+pm.max_children = 10
+pm.start_servers = 2
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3
+php_value[upload_max_filesize]= 100m
+php_value[post_max_size] = 100m
+php_value[max_execution_time] = 1800
+php_flag[display_errors] = on
+php_value[date.timezone] = asia/shanghai
+;php_value[session.save_handler] = memcached
+;php_value[session.save_path] = tcp://127.0.0.1:11211
+
+
+
 # <b>CnsPHP</b>
   a simple php web framework based on smarty ^_^
 
