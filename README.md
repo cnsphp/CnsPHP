@@ -175,7 +175,6 @@ php_value[date.timezone] = asia/shanghai
 │           └── smarty_variable.php
 ├── Docs
 │   └──API.docx
-├── index.php
 └── public
     ├── css
     ├── images
