@@ -72,29 +72,34 @@ php_value[date.timezone] = asia/shanghai
 
 # <b>Structure</b>
 /cnsphp.yiyaozg.com
-├── Application
-│   ├── config.inc.php
+├── Application 
+│   ├── config.inc.php (配置文件)
 │   ├── route.inc.php
 │   ├── init.inc.php
-│   ├── Controller
-│   │   ├── AppController.php
+│   ├── Controller (主要业务编程区)
+│   │   ├── AppController.php (Application用户Controller的基类)
 │   │   ├── Common
-│   │   │   └── CommonController.php
-│   │   └─ Job
-│   │     ├── PController.php
-│   │     ├── UController.php
-│   │     ├── WeixinController.php
-│   │     └── WxpayController.php
+│   │   │     └── CommonController.php
+│   │   └─ Admin
+│   │   │    ├── IndexController.php
+│   │   │    ├── UserController.php
+│   │   │    ├── ...
+│   │   │    └── WxpayController.php
+│   │   └─ User
+│   │       ├── IndexController.php
+│   │       ├── UserController.php
+│   │       ├── ...
+│   │       └── WxpayController.php
 │   │
 │   ├── Model
-│   │   ├── AppModel.php
-│   │   └── Front
-│   │       └── IndexModel.php
+│   │    ├── AppModel.php
+│   │    └── Front
+│   │         └── IndexModel.php
 │   ├── View
 │   │     ├── cache
 │   │     ├── compile
-│   │     │   ├── 117e3ee986632ea32414f51c36f33c9b36cd144e_0.file.index.html.php
-│   │     │   └── f9aa2f04ca5ef71405378acc0b07b8b087648838_0.file.index.html.php
+│   │     │    ├── 117e3ee986632ea32414f51c36f33c9b36cd144e_0.file.index.html.php
+│   │     │    └── f9aa2f04ca5ef71405378acc0b07b8b087648838_0.file.index.html.php
 │   │     ├── config
 │   │     └── html
 │   │         └── job
@@ -139,7 +144,7 @@ php_value[date.timezone] = asia/shanghai
 │         │   └── random_compat
 │         └── voku
 │            └─anti-xs
-├── CnsPHP
+├── CnsPHP (基本不用修改)
 │   ├── Common
 │   │   ├── CheckCode.php
 │   │   ├── CnsMemcached.php
@@ -181,22 +186,7 @@ php_value[date.timezone] = asia/shanghai
     ├── index.php
     ├── js
     │   └── jquery.form.js
-    └── uploads
-							
-
-# <b>Install</b>  
-  1) modify the nginx config   
-     $ sudo vim /etc/nginx/sites-enabled/www.a.com
-       location / {
-           try_files $uri $uri/ /index.php?$args;
-       }
-
-   2) in the document_root directory install CnsPHP
-     $ cd /var/www/htdocs/www.a.com 
-     $ wget https://raw.githubusercontent.com/cnsphp/CnsPHP/master/install.sh
-     $ chmod +x install.sh
-     $ sudo ./install.sh
-
+    └── uploads 
 
 # <b>Example</b>							
    http://www.a.com/module/controller/method/arg1/val1/arg2/val2/arg3/val3
@@ -205,7 +195,7 @@ php_value[date.timezone] = asia/shanghai
    http://www.a.com/admin/user/info/a/b/c/d/e/f
    
    Controller/Admin/User.php
-      public function Info($args=[]) {
+      public function Info($args,$post,$get) {
           ...
       }
    
@@ -235,6 +225,116 @@ php_value[date.timezone] = asia/shanghai
         $this->view->right_delimiter = '}--&gt;';
         
     Example:
+    <?php
+namespace Application\Controller\Job;
+
+use Application\Controller\AppController;
+use Application\Model\AppModel;
+
+use CnsPHP\Common\FileCache;
+use CnsPHP\Common\Str;
+use CnsPHP\Common\Net;
+use CnsPHP\Common\File;
+use CnsPHP\Common\CnsMemcached;
+use CnsPHP\Common\QRCode;
+
+use CnsPHP\Controller\Auth as Auth;
+use Application\Common\CnsSMS as CnsSMS;
+use CnsPHP\Common\CheckCode;
+use Application\Common\CnsToken;
+use Application\Common\CnsMail;
+
+class Users extends AppModel{}
+
+class UController extends AppController
+{
+     public static function Authcode($args,$post,$get){
+         $_SESSION['auth_check_code'][$args['act']]=CheckCode::create(90,25);
+     }
+
+     public static function Register($args, $post, $get){
+         self::show();
+     }
+
+     public static function Registered($args,$post,$get){
+         if (!CheckCode::Verify('register', $post['checkcode'])){
+            return Net::redirect('/u/register','验证码错误',3);
+         }
+
+         $eastr = md5(Str::random(60));
+         Users::insert([
+             'gid' => 'P',
+             'username'=>$post['username'],
+             'passwd' => Auth::passwd($post['passwd']),
+             'email' => $post['email'],
+             'eastr' => $eastr,
+             'regtime'=>date('U')
+         ]);
+
+         if (Users::$affectedRows == 1) {
+             return Net::redirect('/',"注册成功",3);
+
+             //$send = CnsMail::Send($post['email'], '空灵触动科技 邮箱激活', Net::host() . "/user/valid-email/valid/" . $eastr);
+             //if ($send == 'ok')
+             //    return Str::msg(1, '注册成功, 请前往邮箱' . $post['email'] . '激活');
+             //else
+             //    return Str::msg(1, '注册成功, 但激活邮件发送失败,请再次发送或联系客服');
+         } else
+             return Net::redirect(-1,"注册失败",3);
+             return Str::msg(-1, 'register failed: ' . Users::$error_msg);
+
+     }
+
+     public static function Login($args,$post,$get){
+          self::show();
+     }
+
+     public static function Unreg($args,$post,$get){
+          unset($_SESSION['HTTP_QCTKA']);
+          Net::redirect('/','注销成功',3);
+     }
+
+     public static function Logined($args,$post,$get){
+         //验证码检测
+         if (!CheckCode::Verify('login', $post['checkcode']))
+             return Str::msg(-1, '验证码错误');
+
+         $arr = Users::getOne("", ['username'=>$post['username'],'email' => $post['username']], "select uid,gid,username,email,passwd,mobile,eastr,eastatus from users where (email=:username or username=:username)");
+
+         //如果邮箱存在 且已经激活
+         if($arr['eastatus'] == 'Y'){
+             //验证密码是否正确
+             if (auth::passwd_verify($post['passwd'], $arr['passwd'])) {
+                 //generate token
+                 $token = CnsToken::token($arr['uid'], ["_tk_uid" => $arr['uid'], "_tk_gid" => $arr['gid'], '_tk_ip' => Net::clientip()], 30);
+
+                 Users::update(['lastlogin' => date('U')], ['uid' => $arr['uid']]);
+                 return Net::redirect('/', '登陆成功',3);
+             } else {
+                 return Net::redirect(-1, '邮箱或密码错误');
+             }
+         } else {
+                 return Net::redirect(-1, '帐号还未激活');
+                     $url = Net::host() . "/user/valid-email/valid/" . $arr['eastr'];
+                     $str = <<<_EOF_ 
+             请验证您的邮箱 
+             尊敬的用户 您好： 
+             欢迎您注册 a.com，点击链接接来验证您的 Email：.... 安全起见，该链接将于发送后 30分钟失效。 
+_EOF_;
+                     //$send = CnsMail::Send($post['email'], 'a.com 邮箱激活', $str);
+
+                     //if ($send)
+                     //    Str::msg(-3, '您的邮箱尚未激活,请去邮箱' . $post['email'] . '激活');
+                     //else
+                     //    Str::msg(-4, '您的邮箱尚未激活,但发送激活连接失败,请联系在线客服');
+             }
+     }
+
+     public static function Center($args,$post,$get){
+         self::show();
+     }
+}
+    
        1)CnsPHP/Controller/Admin/User.php
         &lt;?php
         namespace CnsPHP;
@@ -243,7 +343,7 @@ php_value[date.timezone] = asia/shanghai
                  parent::__construct('user');
              }
         }
-        class User extends Controller {
+        class User extends AppController {
              function __construct(){
                  parent::__construct();
              }
