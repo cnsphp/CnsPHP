@@ -218,14 +218,7 @@ php_value[date.timezone] = asia/shanghai
       }   
    
 # <b>Controller and Smarty TPL</b> 
-    Documentation http://www.smarty.net/documentation
-    
-    default we use:
-        $this->view->left_delimiter = '&lt;!--{';
-        $this->view->right_delimiter = '}--&gt;';
-        
-    Example:
-    &lt;?php
+&lt;?php
 namespace Application\Controller\Job;
 
 use Application\Controller\AppController;
@@ -317,9 +310,8 @@ class UController extends AppController
                  return Net::redirect(-1, '帐号还未激活');
                      $url = Net::host() . "/user/valid-email/valid/" . $arr['eastr'];
                      $str = <<<_EOF_ 
-             请验证您的邮箱 
-             尊敬的用户 您好： 
-             欢迎您注册 a.com，点击链接接来验证您的 Email：.... 安全起见，该链接将于发送后 30分钟失效。 
+尊敬的用户 您好： 
+    欢迎您注册 a.com，点击链接接来验证您的 Email：.... 安全起见，该链接将于发送后 30分钟失效。 
 _EOF_;
                      //$send = CnsMail::Send($post['email'], 'a.com 邮箱激活', $str);
 
@@ -335,8 +327,8 @@ _EOF_;
      }
 }
     
-       1)CnsPHP/Controller/Admin/User.php
-        &lt;?php
+1)CnsPHP/Controller/Admin/User.php
+&lt;?php
         namespace CnsPHP;
         class UserModel extends Model {
              function __construct(){
