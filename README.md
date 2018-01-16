@@ -219,7 +219,7 @@ php_value[date.timezone] = asia/shanghai
    
 # <b>Controller and Smarty TPL</b> 
 &lt;?php
-namespace Application\Controller\Job;
+namespace Application\Controller\Admin;
 
 use Application\Controller\AppController;
 use Application\Model\AppModel;
@@ -328,12 +328,19 @@ _EOF_;
      }
 }
     
-1)CnsPHP/Controller/Admin/User.php
+1)Application/Controller/Admin/UserController .php
 &lt;?php
-        namespace CnsPHP;
-        class Users extends AppModel {
-        }
-        class User extends AppController {
+namespace Application\Controller\Admin;
+
+use Application\Controller\AppController;
+use Application\Model\AppModel;
+
+use CnsPHP\Common\Str;
+use CnsPHP\Common\Net;
+use CnsPHP\Common\FileCache;
+
+class Users extends AppModel{}
+        class UserController  extends AppController {
 
              function Info($args=[]) {
                //database
