@@ -225,7 +225,7 @@ php_value[date.timezone] = asia/shanghai
         $this->view->right_delimiter = '}--&gt;';
         
     Example:
-    <?php
+    &lt;?php
 namespace Application\Controller\Job;
 
 use Application\Controller\AppController;
