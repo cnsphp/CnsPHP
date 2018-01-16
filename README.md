@@ -265,21 +265,22 @@ class UController extends AppController
          ]);
 
          if (Users::$affectedRows == 1) {
-             return Net::redirect('/',"注册成功",3);
+             //普通程序
+	     return Net::redirect('/',"注册成功",3);
 
-             //$send = CnsMail::Send($post['email'], '空灵触动科技 邮箱激活', Net::host() . "/user/valid-email/valid/" . $eastr);
-             //if ($send == 'ok')
-             //    return Str::msg(1, '注册成功, 请前往邮箱' . $post['email'] . '激活');
-             //else
-             //    return Str::msg(1, '注册成功, 但激活邮件发送失败,请再次发送或联系客服');
+             //API返回  {"code": "1", "msg": "注册成功", "data":{}, "token": ""}
+             return Str::msg(1, '注册成功'); 
          } else
              return Net::redirect(-1,"注册失败",3);
-             return Str::msg(-1, 'register failed: ' . Users::$error_msg);
-
+	     
+	     //API返回   {"code": "1", "msg": "注册失败...", "data":{}, "token": ""}
+             //return Str::msg(-1, '注册失败: ' . Users::$error_msg);
      }
 
+    
      public static function Login($args,$post,$get){
-          self::show();
+           //显示模板
+           self::show();
      }
 
      public static function Unreg($args,$post,$get){
