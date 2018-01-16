@@ -71,24 +71,119 @@ php_value[date.timezone] = asia/shanghai
   a simple php web framework based on smarty ^_^
 
 # <b>Structure</b>
-/index.php
-/CnsPHP/
-   ├─ Controller
-   │    ├─ Controller.php
-   │    └─ Admin
-   │          └─ User.php
-   ├─ Model
-   │    └─ Model.php
-   └─ Smarty
-          └─ Smarty.class.php
- /tpl
-   ├─ cache
-   ├─ compile
-   ├─ config
-   └─ html
-        └─ admin
-             └─ user
-                  └─ info.html							
+/cnsphp.yiyaozg.com
+├── Application
+│   ├── config.inc.php
+│   ├── route.inc.php
+│   ├── init.inc.php
+│   ├── Controller
+│   │   ├── AppController.php
+│   │   ├── Common
+│   │   │   └── CommonController.php
+│   │   └─ Job
+│   │     ├── PController.php
+│   │     ├── UController.php
+│   │     ├── WeixinController.php
+│   │     └── WxpayController.php
+│   │
+│   ├── Model
+│   │   ├── AppModel.php
+│   │   └── Front
+│   │       └── IndexModel.php
+│   ├── View
+│   │     ├── cache
+│   │     ├── compile
+│   │     │   ├── 117e3ee986632ea32414f51c36f33c9b36cd144e_0.file.index.html.php
+│   │     │   └── f9aa2f04ca5ef71405378acc0b07b8b087648838_0.file.index.html.php
+│   │     ├── config
+│   │     └── html
+│   │         └── job
+│   │             ├── p
+│   │             │   └── center.html
+│   │             └── u
+│   │                 ├── login.html
+│   │                 └── register.html
+│   └── Common
+│     ├── CnsAntiXSS.php
+│     ├── CnsMail.php
+│     ├── CnsSMS.php
+│     ├── CnsToken.php
+│     ├── token.php
+│     ├── third
+│     │   ├── alimail
+│     │   │   ├── AliMail.php
+│     │   │   └── aliyun
+│     │   │       ├── aliyun-php-sdk-alidns
+│     │   │       ...
+│     │   │       ├── aliyun-php-sdk-green
+│     │   │       └── README.md
+│     │   ├── alipay
+│     │   │   ├── config.php
+│     │   │   ...
+│     │   │   └── return_url.php
+│     │   ├── sms
+│     │   │   ├── smsapi.class.php
+│     │   │   └── SMSCN.php
+│     │   └── wxpay
+│     │       ├── cert
+│     │       ├── index.php
+│     │        ..
+│     │       └── logs
+│     │           └── 2017-09-17.log
+│     └── vendor
+│         ├── firebase
+│         │   └── php-jwt
+│         ├── ircmaxell
+│         │   └── password-compat
+│         ├── paragonie
+│         │   └── random_compat
+│         └── voku
+│            └─anti-xs
+├── CnsPHP
+│   ├── Common
+│   │   ├── CheckCode.php
+│   │   ├── CnsMemcached.php
+│   │   ├── cookie.txt
+│   │   ├── FileCache.php
+│   │   ├── File.php
+│   │   ├── Ftp.php
+│   │   ├── Img.php
+│   │   ├── ImgUploadEffect.php
+│   │   ├── Net.php
+│   │   ├── QRCode.php
+│   │   ├── Spider.php
+│   │   ├── String.php
+│   │   ├── Str.php
+│   │   └── SVG.php
+│   ├── Controller
+│   │   ├── Auth.php
+│   │   ├── Controller.php
+│   │   └── Route.php
+│   ├── Model
+│   │   └── Model.php
+│   ├── Route.php
+│   └── View
+│       ├── Autoloader.php
+│       ├── debug.tpl
+│       ├── plugins
+│       ├── SmartyBC.class.php
+│       ├── Smarty.class.php
+│       └── sysplugins
+│           ├── smarty_cacheresource_custom.php
+│           ├ ....
+│           ├── smarty_undefined_variable.php
+│           └── smarty_variable.php
+├── Docs
+│   └──API.docx
+├── index.php
+└── public
+    ├── css
+    ├── images
+    ├── index.php
+    ├── js
+    │   └── jquery.form.js
+    └── uploads
+							
 
 # <b>Install</b>  
   1) modify the nginx config   
