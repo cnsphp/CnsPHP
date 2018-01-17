@@ -1,5 +1,5 @@
 {
-    "name": "cnsyao/CnsPHP",
+    "name": "cnsyao/cnsphp",
     "description": "a simple php mvc framework, based on smarty ",
     "require": {
         "php": "^7.0",
