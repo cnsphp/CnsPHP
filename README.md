@@ -1,4 +1,32 @@
 <pre>
+.Install
+1) composar
+   ubuntu)
+       apt-get install curl
+       apt-get install git
+       apt-get install php7.0 php7.0-json php7.0-mbstring php7.0-intl php7.0-fpm  
+       curl -sS https://getcomposer.org/installer | php
+       mv composer.phar /usr/local/bin/composer
+
+       useradd -s /bin/bash -d /home/user user
+ 
+       mkdir -p /home/user
+       chown -R user:user /home/user
+ 
+       su - user
+       composer  create-project cnsyao/cnsphp -s dev
+       
+    CentOS/Redhat)
+       ...
+
+2) git
+   git clone https://github.com/cnsphp/CnsPHP.git
+
+3) download
+   wget https://github.com/cnsphp/CnsPHP/archive/master.zip
+
+////////////////////////////////////////////////////////////////////////////////
+
 <b>.nginx</b>
 #/etc/nginx/sites-enabled/cnsphp.yiyaozg.com 
 server {
