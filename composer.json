@@ -10,6 +10,6 @@
             "name": "cnsyao",
             "email": "214363570@qq.com"
         }
-    ],
-    "version": "0.0.2"
+    ],   
+    "minimum-stability": "dev"
 }
