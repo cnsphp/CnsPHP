@@ -1,0 +1,8 @@
+{
+    "name": "cnsyao/CnsPHP",
+    "description": "a simple php mvc framework, based on smarty ",
+    "require": {
+        "php": "^7.0",
+        "another-vendor/package": "1.*"
+    }
+}
