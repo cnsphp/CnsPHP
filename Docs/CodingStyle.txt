@@ -1,0 +1,169 @@
+.PSR-1
+1)File use only  
+<?php
+ 
+2)File coding must only utf-8 without BOM
+
+3)Namespace and class names
+  namespaces and class must follow autoloading
+  namespace and use must follow a blank line
+
+  Each class is in a file by itself
+
+  Class names must be declared in ClassName
+
+  namespace Vendor\Model;
+
+  class SchoolFoods {
+  }
+
+4)Class constants must be declared in all upper case with underscore seprators
+  MYSQL_PASSWD="xxx";
+
+5)Method names must be declared in camelCase
+  getName()
+  getAge()
+
+6)Braces
+  Opening braces for classes MUST go on the next line, and closing braces MUST go on the next line after the body.
+
+  Opening braces for methods MUST go on the next line, and closing braces MUST go on the next line after the body.
+
+7)
+Control structure keywords (if for while switch ) MUST have one space after them; method and function calls MUST NOT.
+ if (age > 20) {
+
+ } elseif (age < 50) {
+
+ }
+
+<?php
+namespace Vendor\Package;
+ 
+use FooInterface;
+use BarClass as Bar;
+use OtherVendor\OtherPackage\BazClass;
+
+class Foo extends Bar implements FooInterface
+{
+    public function sampleFunction($a, $b = null)
+    {
+        if ($a === $b) {
+            bar();
+        } elseif ($a > $b) {
+            $foo->bar($arg1);
+        } else {
+            BazClass::bar($arg2, $arg3);
+        }
+    }
+
+    final public static functionbar()
+    {
+        // method body
+    }
+}
+
+8)
+  all php files must use the Unix LF(line feed) line ending
+
+9)
+  all PHP files must end with a single blank line
+
+10)
+  the closing ?> tag must be omitted from files containning only PHP
+
+11)
+  code must use an indent of 4 spaces, and must not use tabs for indenting
+
+12)
+  true, false, and null must be in lower case
+
+13)
+  namespace and the last use must be followed by one blank line
+
+14)
+  method arguments must like
+  final public static function foo($arg1, $arg2, $arg3 = [] )
+  {
+
+  }
+
+  A::foo($arg1, $arg2, $arg3);
+  A::foo(
+    $arg1,
+    $arg2,
+    $arg3
+  );
+
+15) if 
+   if ($age > 20) {
+   } elseif ($age>30) {
+
+   } else {
+   }
+
+14) switch
+   switch ($age) {
+       case 20: 
+            ....
+            break;
+       case 30:
+       case 40:
+            ...
+            break;
+       default: 
+            ...
+   }
+  
+16) while
+    while ($age>20) {
+
+    }
+
+17) do while
+    do {
+    } while ($age>20);
+
+
+18) foreach
+    foreach ($arr as $key => $value) {
+
+    }
+
+19) try
+    try {
+    } catch ($e) {
+
+    } finally {
+
+    }
+
+20) 
+$func = function($arg1, $arg2) {
+
+};
+
+$fun2 = function ($arg1, $arg2) use ($var1, $var2) {
+
+};
+
+$foo->bar(
+    $arg1,
+    function ($arg2) use ($var2) {
+    },
+    $arg3
+);
+
+$foo->bar($arg1, function ($arg2) use ($var2) {
+    ...
+},$arg3);
+
+func($arg1, $arg2, [
+    ...
+], $arg3);
+
+21) LoggerInterface
+  debug, info, notice, warning, error, critical, alert, emergency
+
+
+  
