@@ -4,7 +4,7 @@
    ubuntu)
        apt-get install curl
        apt-get install git
-       apt-get install php7.0 php7.0-json php7.0-mbstring php7.0-intl php7.0-fpm  
+       apt-get install php7.0 php7.0-json php7.0-mbstring php7.0-intl php7.0-fpm php-memcached
        curl -sS https://getcomposer.org/installer | php
        mv composer.phar /usr/local/bin/composer
 
